@@ -11,19 +11,20 @@ public class PrimeiroGrafo {
 //        grafo.imprimeGrafo();
         
         GrafoLista grafo = new GrafoLista();
-        Vertice v0 = new Vertice(0);
-        Vertice v1 = new Vertice(1);
-        Vertice v2 = new Vertice(2);
-        Vertice v3 = new Vertice(3);
+        Vertice v0 = new Vertice("0");
+        Vertice v1 = new Vertice("1");
+        Vertice v2 = new Vertice("2");
+        Vertice v3 = new Vertice("3");                
+        
         grafo.insereVertice(v0);
         grafo.insereVertice(v1);
         grafo.insereVertice(v2);
-        grafo.insereVertice(v3);
+        grafo.insereVertice(v3);      
         
-        grafo.insereAresta(new Aresta(v0, v3));
-        grafo.insereAresta(new Aresta(v1, v2));
-        grafo.insereAresta(new Aresta(v2, v0));
-        grafo.insereAresta(new Aresta(v3, v2));
+        //grafo.insereAresta(v0, v3);
+        //grafo.insereAresta(v1, v2);
+        //grafo.insereAresta(v2, v0);
+        //grafo.insereAresta(v3, v2);
         
         grafo.imprimeGrafo();
     }
