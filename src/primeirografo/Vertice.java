@@ -9,9 +9,9 @@ public class Vertice {
 
     Vertice(String rotulo) {
         this.rotulo = rotulo;
-    }
+    }   
     
     public void insereAresta(Aresta aresta){
         this.listaAresta.add(aresta);
-    }        
+    }                
 }

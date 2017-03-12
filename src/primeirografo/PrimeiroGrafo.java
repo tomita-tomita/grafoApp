@@ -11,20 +11,32 @@ public class PrimeiroGrafo {
 //        grafo.imprimeGrafo();
         
         GrafoLista grafo = new GrafoLista();
-        Vertice v0 = new Vertice("0");
-        Vertice v1 = new Vertice("1");
-        Vertice v2 = new Vertice("2");
-        Vertice v3 = new Vertice("3");                
+        Vertice v0 = new Vertice("A");
+        Vertice v1 = new Vertice("B");
+        Vertice v2 = new Vertice("C");
+        Vertice v3 = new Vertice("D");                
         
         grafo.insereVertice(v0);
         grafo.insereVertice(v1);
         grafo.insereVertice(v2);
         grafo.insereVertice(v3);      
         
-        //grafo.insereAresta(v0, v3);
-        //grafo.insereAresta(v1, v2);
-        //grafo.insereAresta(v2, v0);
-        //grafo.insereAresta(v3, v2);
+        grafo.inserirAresta(v0, v3);
+        grafo.inserirAresta(v1, v2);
+        grafo.inserirAresta(v2, v0);
+        grafo.inserirAresta(v3, v2);
+        
+        System.out.println(grafo.removeVertice(v1));
+
+        System.out.println(grafo.removeAresta(v2, v0));   
+        
+        if(grafo.verificaAresta(v2, v1)){
+            System.out.println("Grafo já possui aresta "+v2.rotulo+"--->"+v1.rotulo);
+        }else{
+            System.out.println("Grafo não possui aresta "+v2.rotulo+"--->"+v1.rotulo);
+        }
+
+        
         
         grafo.imprimeGrafo();
     }

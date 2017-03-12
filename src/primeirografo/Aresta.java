@@ -6,4 +6,8 @@ public class Aresta {
         Aresta(Vertice destino){            
             this.destino = destino;            
         }  
+        
+    public Vertice getVertice(){
+        return this.destino;
+    }
 }
