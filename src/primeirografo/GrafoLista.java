@@ -11,8 +11,14 @@ public class GrafoLista {
     }
     
     public void inserirAresta(Vertice origem, Vertice destino){
-        origem.insereAresta(new Aresta(destino));
-        destino.insereAresta(new Aresta(origem));
+        for (Vertice vertice : listaVertice) {
+            if (vertice.rotulo.equals(origem.rotulo)){
+                vertice.insereAresta(new Aresta(destino));
+            }
+            if (vertice.rotulo.equals(destino.rotulo)){
+                vertice.insereAresta(new Aresta(origem));
+            }            
+        }        
     }
     
     public boolean verificaVertice(Vertice vertice_verificar){
