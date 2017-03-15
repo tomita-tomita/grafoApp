@@ -6,31 +6,45 @@ public class GrafoLista {
 
     ArrayList<Vertice> listaVertice = new ArrayList<>();
 
-    public void insereVertice(Vertice vertice) {
-        this.listaVertice.add(vertice);
+    public boolean insereVertice(Vertice novoVertice) {
+        for (Vertice vertice : listaVertice) {
+            if (vertice.rotulo.equals(novoVertice.rotulo)){
+                return false;
+            }
+        }
+        
+        this.listaVertice.add(novoVertice);
+        return true;
     }
     
-    public void inserirAresta(Vertice origem, Vertice destino){
-        origem.insereAresta(new Aresta(destino));
-        destino.insereAresta(new Aresta(origem));
+    public void inserirAresta(String rotulo_origem, String rotulo_destino){
+        //Não deve deixar gravar duas vezes o mesmo vértice (criar validação)
+        for (Vertice vertice : listaVertice) {
+            if (vertice.rotulo.equals(rotulo_origem)){
+                vertice.insereAresta(new Aresta(rotulo_destino));
+            }
+            if (vertice.rotulo.equals(rotulo_destino)){
+                vertice.insereAresta(new Aresta(rotulo_origem));
+            }            
+        }        
     }
     
-    public boolean verificaVertice(Vertice vertice_verificar){
+    public boolean verificaVertice(String vertice_verificar){
         boolean existe = false;
         for (Vertice vertice : listaVertice) {            
-            if(vertice.rotulo == vertice_verificar.rotulo){                
+            if(vertice.rotulo.equals(vertice_verificar)){                
                 existe = true;
             }
         }
         return existe;
     }
     
-    public boolean verificaAresta(Vertice origem, Vertice destino){
+    public boolean verificaAresta(String origem, String destino){
         boolean exite = false;
         for (Vertice vertice : listaVertice) {
-            if (vertice.rotulo == origem.rotulo) {
-                for (int i = 0; i < vertice.listaAresta.size(); i++) {
-                    if(vertice.listaAresta.get(i).destino.rotulo == destino.rotulo){
+            if (vertice.rotulo.equals(origem)) {
+                for (int i = 0; i < vertice.listaAresta.size(); i++) {                    
+                    if(vertice.listaAresta.get(i).destino.equals(destino)){
                         exite = true;
                     }
                 }
@@ -39,39 +53,39 @@ public class GrafoLista {
         return exite;
     }
 
-    public String removeVertice(Vertice vertice_remove) {
+    public String removeVertice(String vertice_remove) {
         if(verificaVertice(vertice_remove)){
             for (int i = 0; i < this.listaVertice.size(); i++) {
-                if(this.listaVertice.get(i).rotulo == vertice_remove.rotulo){
+                if(this.listaVertice.get(i).rotulo.equals(vertice_remove)){
                     this.listaVertice.remove(i);
                     for (Vertice vertice : listaVertice) {            
                         for (int j = 0; j < vertice.listaAresta.size(); j++) {
-                            if(vertice.listaAresta.get(j).getVertice().rotulo == vertice_remove.rotulo){
+                            if(vertice.listaAresta.get(j).getVertice().equals(vertice_remove)){
                                 vertice.listaAresta.remove(j);
                             }
                         }
                     }                                     
                 }
             }         
-            return "Vertice "+vertice_remove.rotulo+" removido com sucesso";                
+            return "Vertice "+vertice_remove+" removido com sucesso";                
         }
-        return "Não foi encontrado nenhum vertice "+vertice_remove.rotulo;                                                   
+        return "Não foi encontrado nenhum vertice "+vertice_remove;                                                   
     }
 
-    public String removeAresta(Vertice origem, Vertice destino) {
+    public String removeAresta(String origem, String destino) {
         if(verificaAresta(origem, destino)){
             for (Vertice vertice : listaVertice) {
-                if (vertice.rotulo == origem.rotulo) {
+                if (vertice.rotulo.equals(origem)) {
                     for (int i = 0; i < vertice.listaAresta.size(); i++) {
-                        if(vertice.listaAresta.get(i).destino.rotulo == destino.rotulo){
+                        if(vertice.listaAresta.get(i).destino.equals(destino)){
                             vertice.listaAresta.remove(i);
                         }
                     }
                 }
             }
-            return "Aresta "+origem.rotulo+"--->"+destino.rotulo+" removida com sucesso!";
+            return "Aresta "+origem+"--->"+destino+" removida com sucesso!";
         }
-        return "Aresta "+origem.rotulo+"--->"+destino.rotulo+" não encontrada";
+        return "Aresta "+origem+"--->"+destino+" não encontrada";
     }
 
     public void imprimeGrafo() {
@@ -79,25 +93,25 @@ public class GrafoLista {
             System.out.print(vertice.rotulo + ": ");
 
             for (Aresta aresta : vertice.listaAresta) {
-                System.out.print(aresta.destino.rotulo + " ");
+                System.out.print(aresta.destino + " ");
             }
             System.out.println();
         }
     }
     
-    public boolean verificaPlanar(){
-        boolean possivel = false;
-        for (int i = 0; i < listaVertice.size(); i++) {            
-            for (int j = i+1; j < listaVertice.size(); j++) {
-                for (int k = 0; k < listaVertice.get(j).listaAresta.size(); k++) {
-                    if (listaVertice.get(j).listaAresta.get(k).destino.rotulo == listaVertice.get(i).rotulo) {
-                        System.out.println(listaVertice.get(i).rotulo);
-                        possivel = true;
-                    }
-                }
-            }
-        }
-        return possivel;
-    }
+//    public boolean verificaPlanar(){
+//        boolean possivel = false;
+//        for (int i = 0; i < listaVertice.size(); i++) {            
+//            for (int j = i+1; j < listaVertice.size(); j++) {
+//                for (int k = 0; k < listaVertice.get(j).listaAresta.size(); k++) {
+//                    if (listaVertice.get(j).listaAresta.get(k).destino == listaVertice.get(i).rotulo) {
+//                        System.out.println(listaVertice.get(i).rotulo);
+//                        possivel = true;
+//                    }
+//                }
+//            }
+//        }
+//        return possivel;
+//    }
 
 }

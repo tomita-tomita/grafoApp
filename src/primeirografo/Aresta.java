@@ -1,13 +1,13 @@
 package primeirografo;
 
 public class Aresta {    
-        Vertice destino;        
+        String destino;        
         
-        Aresta(Vertice destino){            
+        Aresta(String destino){            
             this.destino = destino;            
         }  
         
-    public Vertice getVertice(){
+    public String getVertice(){
         return this.destino;
     }
 }
