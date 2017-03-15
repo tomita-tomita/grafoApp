@@ -13,5 +13,13 @@ public class Vertice {
     
     public void insereAresta(Aresta aresta){
         this.listaAresta.add(aresta);
-    }                
+    } 
+
+    public ArrayList<Aresta> getListaAresta() {
+        return listaAresta;
+    }
+
+    public String getRotulo() {
+        return rotulo;
+    }        
 }

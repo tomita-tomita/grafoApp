@@ -21,22 +21,24 @@ public class PrimeiroGrafo {
         grafo.insereVertice(v2);
         grafo.insereVertice(v3);      
         
-        grafo.inserirAresta(v0, v3);
-        grafo.inserirAresta(v1, v2);
-        grafo.inserirAresta(v2, v0);
-        grafo.inserirAresta(v3, v2);
+        grafo.inserirAresta("A", "D");
+        grafo.inserirAresta("B", "C");
+        grafo.inserirAresta("C", "A");
+        grafo.inserirAresta("D", "C");
         
-        System.out.println(grafo.removeVertice(v1));
+        System.out.println(grafo.removeVertice("B"));
 
-        System.out.println(grafo.removeAresta(v2, v0));   
+        System.out.println(grafo.removeAresta("C", "A"));   
         
-        if(grafo.verificaAresta(v2, v1)){
+        if(grafo.verificaAresta("C", "B")){
             System.out.println("Grafo já possui aresta "+v2.rotulo+"--->"+v1.rotulo);
         }else{
             System.out.println("Grafo não possui aresta "+v2.rotulo+"--->"+v1.rotulo);
         }
 
         
+        //Validações necessárias:
+        //Se a função insereVertice retornar false significa que o vertice já existe.        
         
         grafo.imprimeGrafo();
     }
