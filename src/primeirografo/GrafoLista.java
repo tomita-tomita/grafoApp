@@ -84,5 +84,20 @@ public class GrafoLista {
             System.out.println();
         }
     }
+    
+    public boolean verificaPlanar(){
+        boolean possivel = false;
+        for (int i = 0; i < listaVertice.size(); i++) {            
+            for (int j = i+1; j < listaVertice.size(); j++) {
+                for (int k = 0; k < listaVertice.get(j).listaAresta.size(); k++) {
+                    if (listaVertice.get(j).listaAresta.get(k).destino.rotulo == listaVertice.get(i).rotulo) {
+                        System.out.println(listaVertice.get(i).rotulo);
+                        possivel = true;
+                    }
+                }
+            }
+        }
+        return possivel;
+    }
 
 }

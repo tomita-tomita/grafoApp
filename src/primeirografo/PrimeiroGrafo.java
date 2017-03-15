@@ -24,21 +24,21 @@ public class PrimeiroGrafo {
         grafo.inserirAresta(v0, v3);
         grafo.inserirAresta(v1, v2);
         grafo.inserirAresta(v2, v0);
-        grafo.inserirAresta(v3, v2);
+        grafo.inserirAresta(v3, v1);
         
-        System.out.println(grafo.removeVertice(v1));
+//        System.out.println(grafo.removeVertice(v1));
+//
+//        System.out.println(grafo.removeAresta(v2, v0));   
+//        
+//        if(grafo.verificaAresta(v2, v1)){
+//            System.out.println("Grafo já possui aresta "+v2.rotulo+"--->"+v1.rotulo);
+//        }else{
+//            System.out.println("Grafo não possui aresta "+v2.rotulo+"--->"+v1.rotulo);
+//        }
 
-        System.out.println(grafo.removeAresta(v2, v0));   
+        System.out.println(grafo.verificaPlanar());
         
-        if(grafo.verificaAresta(v2, v1)){
-            System.out.println("Grafo já possui aresta "+v2.rotulo+"--->"+v1.rotulo);
-        }else{
-            System.out.println("Grafo não possui aresta "+v2.rotulo+"--->"+v1.rotulo);
-        }
-
-        
-        
-        grafo.imprimeGrafo();
+        //grafo.imprimeGrafo();
     }
     
 }
