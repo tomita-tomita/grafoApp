@@ -99,19 +99,48 @@ public class GrafoLista {
         }
     }
     
-//    public boolean verificaPlanar(){
-//        boolean possivel = false;
-//        for (int i = 0; i < listaVertice.size(); i++) {            
-//            for (int j = i+1; j < listaVertice.size(); j++) {
-//                for (int k = 0; k < listaVertice.get(j).listaAresta.size(); k++) {
-//                    if (listaVertice.get(j).listaAresta.get(k).destino == listaVertice.get(i).rotulo) {
-//                        System.out.println(listaVertice.get(i).rotulo);
-//                        possivel = true;
-//                    }
-//                }
-//            }
-//        }
-//        return possivel;
-//    }
-
+    public int getQuantidadeArestas(){
+        int qtdArestas = 0;
+        
+        for (Vertice vertice : listaVertice) {
+            qtdArestas = qtdArestas + vertice.getListaAresta().size();
+        }
+        
+        //Mudar futuramente quando for aceito grafos direcionais
+        qtdArestas = qtdArestas / 2;
+        
+        return qtdArestas;
+    }
+    
+    public boolean possuiTresCiclos(){
+        boolean possivel = false;        
+        for (int i = 0; i < listaVertice.size(); i++) {            
+            for (int j = i+1; j < listaVertice.size(); j++) {
+                for (int k = 0; k < listaVertice.get(j).listaAresta.size(); k++) {
+                    if (listaVertice.get(j).listaAresta.get(k).destino.equals(listaVertice.get(i).rotulo)) {
+                        System.out.println(listaVertice.get(i).rotulo);
+                        possivel = true;
+                    }
+                }
+            }
+        }
+        return possivel;
+    }
+    
+    public boolean verificaPlanar(){        
+        int qtd_vertice, qtd_arestas;        
+                        
+        if (listaVertice.size() <= 2){
+            return true;
+        }
+        
+        qtd_vertice = listaVertice.size();
+        qtd_arestas = getQuantidadeArestas();        
+        
+        if (possuiTresCiclos()){
+           return  (qtd_arestas <= (3*qtd_vertice - 6));           
+        }else{
+           return (qtd_arestas <= (2*qtd_vertice - 4));
+        }                            
+    }
 }
