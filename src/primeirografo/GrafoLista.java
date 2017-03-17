@@ -102,7 +102,7 @@ public class GrafoLista {
             for (Aresta aresta : vertice.listaAresta) {
                 grafo = grafo + aresta.destino + " ";
             }
-            grafo = grafo + "\n ";
+            grafo = grafo + "\n";
         }
 
         return grafo;

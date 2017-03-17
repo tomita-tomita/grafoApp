@@ -1,7 +1,9 @@
 package primeirografo;
 
+import com.alee.laf.WebLookAndFeel;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -11,6 +13,11 @@ public class Principal extends javax.swing.JFrame {
     GrafoLista grafo;
 
     public Principal() {
+        try {
+            UIManager.setLookAndFeel(new WebLookAndFeel());
+        } catch (Exception e) {
+        }
+
         initComponents();
         ativaBotoes(false);
         campoHistorico.setEnabled(false);
@@ -40,9 +47,15 @@ public class Principal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         campoHistorico = new javax.swing.JTextArea();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Grafos");
+        setPreferredSize(new java.awt.Dimension(599, 358));
+        setResizable(false);
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
         jPanel1.setLayout(new java.awt.GridLayout(11, 0));
@@ -141,7 +154,6 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(400, 439));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        campoHistorico.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
         campoHistorico.setColumns(20);
         campoHistorico.setRows(5);
         jScrollPane1.setViewportView(campoHistorico);
@@ -149,6 +161,38 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_END);
+
+        jPanel3.setMinimumSize(new java.awt.Dimension(50, 50));
+        jPanel3.setPreferredSize(new java.awt.Dimension(100, 50));
+
+        jLabel1.setText("Trabalho de Grafos (M1.1)");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 19, 227));
+        jLabel2.setText("Alunos: Eduardo Vinícius Mölleken Tomita, Leonardo Lucas de Melo");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addContainerGap(216, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
         pack();
         setLocationRelativeTo(null);
@@ -380,8 +424,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton botaoVerificarAresta;
     private javax.swing.JButton botaoVerificarVertice;
     private javax.swing.JTextArea campoHistorico;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
