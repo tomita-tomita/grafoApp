@@ -1,21 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package primeirografo;
 
-/**
- *
- * @author IBF
- */
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 public class Principal extends javax.swing.JFrame {
 
     /**
      * Creates new form Principal
      */
+    GrafoLista grafo;
+
     public Principal() {
         initComponents();
+        ativaBotoes(false);
+        campoHistorico.setEnabled(false);
     }
 
     /**
@@ -28,87 +26,114 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        botaoCriarGrafo = new javax.swing.JButton();
+        botaoAdicionarVertice = new javax.swing.JButton();
+        botaoAdicionarAresta = new javax.swing.JButton();
+        botaoRemoverAresta = new javax.swing.JButton();
+        botaoRemoverVertice = new javax.swing.JButton();
+        botaoVerificarVertice = new javax.swing.JButton();
+        botaoVerificarAresta = new javax.swing.JButton();
+        botaoRetornarArestas = new javax.swing.JButton();
+        botaoImprimirGrafo = new javax.swing.JButton();
+        botaoPlanar = new javax.swing.JButton();
+        botaoLimparHistorico = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        campoHistorico = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Grafos");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
+        jPanel1.setLayout(new java.awt.GridLayout(11, 0));
 
-        jButton1.setText("Criar Grafo");
-
-        jButton2.setText("Adicionar Vértice");
-
-        jButton3.setText("Adicionar Aresta");
-
-        jButton4.setText("Remover Aresta");
-
-        jButton5.setText("jButton1");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        botaoCriarGrafo.setText("Criar Grafo");
+        botaoCriarGrafo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                botaoCriarGrafoActionPerformed(evt);
             }
         });
+        jPanel1.add(botaoCriarGrafo);
 
-        jButton6.setText("jButton1");
+        botaoAdicionarVertice.setText("Adicionar Vértice");
+        botaoAdicionarVertice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAdicionarVerticeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoAdicionarVertice);
 
-        jButton7.setText("jButton1");
+        botaoAdicionarAresta.setText("Adicionar Aresta");
+        botaoAdicionarAresta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAdicionarArestaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoAdicionarAresta);
 
-        jButton8.setText("jButton1");
+        botaoRemoverAresta.setText("Remover Aresta");
+        botaoRemoverAresta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoRemoverArestaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoRemoverAresta);
 
-        jButton9.setText("jButton1");
+        botaoRemoverVertice.setText("Remover Vértice");
+        botaoRemoverVertice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoRemoverVerticeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoRemoverVertice);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(0, 14, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        botaoVerificarVertice.setText("Verificar Vértice");
+        botaoVerificarVertice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVerificarVerticeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoVerificarVertice);
+
+        botaoVerificarAresta.setText("Verificar Aresta");
+        botaoVerificarAresta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVerificarArestaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoVerificarAresta);
+
+        botaoRetornarArestas.setText("Retornar Arestas");
+        botaoRetornarArestas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoRetornarArestasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoRetornarArestas);
+
+        botaoImprimirGrafo.setText("Imprimir Grafo");
+        botaoImprimirGrafo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoImprimirGrafoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoImprimirGrafo);
+
+        botaoPlanar.setText("Verificar se é Planar");
+        botaoPlanar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoPlanarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoPlanar);
+
+        botaoLimparHistorico.setText("Limpar Historico");
+        botaoLimparHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoLimparHistoricoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoLimparHistorico);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -116,21 +141,188 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(400, 439));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jTextArea1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        campoHistorico.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        campoHistorico.setColumns(20);
+        campoHistorico.setRows(5);
+        jScrollPane1.setViewportView(campoHistorico);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_END);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void ativaBotoes(boolean ativa) {
+        botaoAdicionarAresta.setEnabled(ativa);
+        botaoAdicionarVertice.setEnabled(ativa);
+        botaoImprimirGrafo.setEnabled(ativa);
+        botaoRemoverAresta.setEnabled(ativa);
+        botaoRemoverVertice.setEnabled(ativa);
+        botaoRetornarArestas.setEnabled(ativa);
+        botaoVerificarAresta.setEnabled(ativa);
+        botaoVerificarVertice.setEnabled(ativa);
+        botaoPlanar.setEnabled(ativa);
+    }
+
+    private void botaoRemoverVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverVerticeActionPerformed
+        String rotulo = null;
+
+        rotulo = JOptionPane.showInputDialog("Qual o rótulo do vértice?", "Digite o rótulo aqui...");
+
+        if ((rotulo == null) || (rotulo.equals(""))) {
+            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
+        } else {
+            campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeVertice(rotulo));
+        }
+    }//GEN-LAST:event_botaoRemoverVerticeActionPerformed
+
+    private void botaoVerificarVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerificarVerticeActionPerformed
+        String rotulo = null;
+
+        rotulo = JOptionPane.showInputDialog("Qual o rótulo do vértice?", "Digite o rótulo aqui...");
+
+        if ((rotulo == null) || (rotulo.equals(""))) {
+            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
+        } else if (grafo.verificaVertice(rotulo)) {
+            campoHistorico.setText(campoHistorico.getText() + "\n O Vértice foi encontrado.");
+        } else {
+            campoHistorico.setText(campoHistorico.getText() + "\n O Vértice não existe.");
+        }
+    }//GEN-LAST:event_botaoVerificarVerticeActionPerformed
+
+    private void botaoCriarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCriarGrafoActionPerformed
+        if (botaoCriarGrafo.getText().equals("Criar Grafo")) {
+            grafo = new GrafoLista();
+            botaoCriarGrafo.setText("Remover Grafo");
+            ativaBotoes(true);
+        } else {
+            grafo = null;
+            botaoCriarGrafo.setText("Criar Grafo");
+            ativaBotoes(false);
+        }
+    }//GEN-LAST:event_botaoCriarGrafoActionPerformed
+
+    private void botaoAdicionarVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarVerticeActionPerformed
+        String rotulo = null;
+
+        rotulo = JOptionPane.showInputDialog("Qual o rótulo do vértice?", "Digite o rótulo aqui...");
+
+        if ((rotulo == null) || (rotulo.equals(""))) {
+            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
+        } else {
+            Vertice novoVertice = new Vertice(rotulo);
+
+            if (grafo.insereVertice(novoVertice)) {
+                campoHistorico.setText(campoHistorico.getText() + "\nO vértice com o rótulo " + rotulo + " foi inserido com sucesso.");
+            } else {
+                campoHistorico.setText(campoHistorico.getText() + "\nO vértice com o rótulo " + rotulo + " já existe.");
+            }
+        }
+
+    }//GEN-LAST:event_botaoAdicionarVerticeActionPerformed
+
+    private void botaoAdicionarArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarArestaActionPerformed
+        String verticeOrigem = null;
+        String verticeDestino = null;
+
+        verticeOrigem = JOptionPane.showInputDialog("Qual o rótulo do vértice de origem?", "Digite o rótulo aqui...");
+
+        if ((verticeOrigem == null) || (verticeOrigem.equals(""))) {
+            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
+        } else {
+
+            verticeDestino = JOptionPane.showInputDialog("Qual o rótulo do vértice de destino?", "Digite o rótulo aqui...");
+
+            if ((verticeDestino == null) || (verticeDestino.equals(""))) {
+                JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
+            } else if (grafo.inserirAresta(verticeOrigem, verticeDestino)) {
+                campoHistorico.setText(campoHistorico.getText() + "\n A aresta foi inserida com sucesso.");
+            } else {
+                campoHistorico.setText(campoHistorico.getText() + "\n A aresta já existe.");
+            }
+        }
+    }//GEN-LAST:event_botaoAdicionarArestaActionPerformed
+
+    private void botaoRemoverArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverArestaActionPerformed
+        String verticeOrigem = null;
+        String verticeDestino = null;
+
+        verticeOrigem = JOptionPane.showInputDialog("Qual o rótulo do vértice de origem?", "Digite o rótulo aqui...");
+
+        if ((verticeOrigem == null) || (verticeOrigem.equals(""))) {
+            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
+        } else {
+
+            verticeDestino = JOptionPane.showInputDialog("Qual o rótulo do vértice de destino?", "Digite o rótulo aqui...");
+
+            if ((verticeDestino == null) || (verticeDestino.equals(""))) {
+                JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
+            } else {
+                campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeAresta(verticeOrigem, verticeDestino));
+            }
+        }
+    }//GEN-LAST:event_botaoRemoverArestaActionPerformed
+
+    private void botaoVerificarArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerificarArestaActionPerformed
+        String verticeOrigem = null;
+        String verticeDestino = null;
+
+        verticeOrigem = JOptionPane.showInputDialog("Qual o rótulo do vértice de origem?", "Digite o rótulo aqui...");
+
+        if ((verticeOrigem == null) || (verticeOrigem.equals(""))) {
+            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
+        } else {
+
+            verticeDestino = JOptionPane.showInputDialog("Qual o rótulo do vértice de destino?", "Digite o rótulo aqui...");
+
+            if ((verticeDestino == null) || (verticeDestino.equals(""))) {
+                JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
+            } else if (grafo.verificaAresta(verticeOrigem, verticeDestino)) {
+                campoHistorico.setText(campoHistorico.getText() + "\n A aresta foi encontrada.");
+            } else {
+                campoHistorico.setText(campoHistorico.getText() + "\n A aresta não existe.");
+            }
+        }
+    }//GEN-LAST:event_botaoVerificarArestaActionPerformed
+
+    private void botaoRetornarArestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRetornarArestasActionPerformed
+        String rotulo = null;
+
+        rotulo = JOptionPane.showInputDialog("Qual o rótulo do vértice?", "Digite o rótulo aqui...");
+
+        if ((rotulo == null) || (rotulo.equals(""))) {
+            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
+        } else {
+            ArrayList<Aresta> arestas = grafo.retornarArestas(rotulo);
+
+            if (arestas != null) {
+                campoHistorico.setText(campoHistorico.getText() + "\nArestas para o Vértice " + rotulo + ": ");
+                for (Aresta aresta : arestas) {
+                    campoHistorico.setText(campoHistorico.getText() + aresta.getVertice() + " | ");
+                }
+            } else {
+                campoHistorico.setText(campoHistorico.getText() + "\nO vértice não possui arestas.");
+            }
+        }
+    }//GEN-LAST:event_botaoRetornarArestasActionPerformed
+
+    private void botaoImprimirGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoImprimirGrafoActionPerformed
+        campoHistorico.setText(campoHistorico.getText() + grafo.imprimeGrafo());
+    }//GEN-LAST:event_botaoImprimirGrafoActionPerformed
+
+    private void botaoPlanarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPlanarActionPerformed
+        if (grafo.verificaPlanar()) {
+            campoHistorico.setText(campoHistorico.getText() + "\n O grafo pode ser planar.");
+        } else {
+            campoHistorico.setText(campoHistorico.getText() + "\n O grafo não é planar.");
+        }
+    }//GEN-LAST:event_botaoPlanarActionPerformed
+
+    private void botaoLimparHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparHistoricoActionPerformed
+        campoHistorico.setText("");
+    }//GEN-LAST:event_botaoLimparHistoricoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,16 +338,24 @@ public class Principal extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -168,18 +368,20 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton botaoAdicionarAresta;
+    private javax.swing.JButton botaoAdicionarVertice;
+    private javax.swing.JButton botaoCriarGrafo;
+    private javax.swing.JButton botaoImprimirGrafo;
+    private javax.swing.JButton botaoLimparHistorico;
+    private javax.swing.JButton botaoPlanar;
+    private javax.swing.JButton botaoRemoverAresta;
+    private javax.swing.JButton botaoRemoverVertice;
+    private javax.swing.JButton botaoRetornarArestas;
+    private javax.swing.JButton botaoVerificarAresta;
+    private javax.swing.JButton botaoVerificarVertice;
+    private javax.swing.JTextArea campoHistorico;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
