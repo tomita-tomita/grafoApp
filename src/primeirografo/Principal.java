@@ -55,7 +55,6 @@ public class Principal extends javax.swing.JFrame {
         setTitle("Grafos");
         setPreferredSize(new java.awt.Dimension(599, 358));
         setResizable(false);
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
         jPanel1.setLayout(new java.awt.GridLayout(11, 0));
@@ -357,10 +356,15 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoImprimirGrafoActionPerformed
 
     private void botaoPlanarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPlanarActionPerformed
-        if (grafo.verificaPlanar()) {
-            campoHistorico.setText(campoHistorico.getText() + "\n O grafo pode ser planar.");
+        if (grafo.listaVertice.size() <= 0) {
+            campoHistorico.setText(campoHistorico.getText() + "\nNão existem vértices.");
         } else {
-            campoHistorico.setText(campoHistorico.getText() + "\n O grafo não é planar.");
+
+            if (grafo.verificaPlanar()) {
+                campoHistorico.setText(campoHistorico.getText() + "\nO grafo pode ser planar.");
+            } else {
+                campoHistorico.setText(campoHistorico.getText() + "\nO grafo não é planar.");
+            }
         }
     }//GEN-LAST:event_botaoPlanarActionPerformed
 
