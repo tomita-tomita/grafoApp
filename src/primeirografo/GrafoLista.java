@@ -17,18 +17,20 @@ public class GrafoLista {
         return true;
     }
 
-    public boolean inserirAresta(String rotulo_origem, String rotulo_destino) {       
+    public boolean inserirAresta(String rotulo_origem, String rotulo_destino) {
         boolean possivel = false;
-        
-        for (Vertice vertice : listaVertice) {
-            if (vertice.rotulo.equals(rotulo_origem)) {
-                possivel = vertice.insereAresta(new Aresta(rotulo_destino));
-            }
-            if (vertice.rotulo.equals(rotulo_destino)) {
-                possivel = vertice.insereAresta(new Aresta(rotulo_origem));
+
+        if ((verificaVertice(rotulo_origem)) && (verificaVertice(rotulo_origem)) && (!rotulo_origem.equals(rotulo_destino))) {
+            for (Vertice vertice : listaVertice) {
+                if (vertice.rotulo.equals(rotulo_origem)) {
+                    possivel = vertice.insereAresta(new Aresta(rotulo_destino));
+                }
+                if (vertice.rotulo.equals(rotulo_destino)) {
+                    possivel = vertice.insereAresta(new Aresta(rotulo_origem));
+                }
             }
         }
-        
+
         return possivel;
     }
 
@@ -93,7 +95,7 @@ public class GrafoLista {
 
     public String imprimeGrafo() {
         String grafo = "";
-        
+
         for (Vertice vertice : listaVertice) {
             grafo = grafo + vertice.rotulo + ": ";
 
@@ -102,7 +104,7 @@ public class GrafoLista {
             }
             grafo = grafo + "\n ";
         }
-        
+
         return grafo;
     }
 
@@ -121,13 +123,15 @@ public class GrafoLista {
 
     public boolean possuiTresCiclos() {
         boolean possivel = false;
-        for (int i = 0; i < listaVertice.size(); i++) {            
-            for (int j = 0; j < listaVertice.size(); j++) {                
-                for (int k = 0; k < listaVertice.get(j).listaAresta.size(); k++) {
-                    if ((listaVertice.get(j).listaAresta.get(k).destino.equals(listaVertice.get(i).rotulo)) && (i != j) && (i != k) && (j != k)) {
-                        if (verificaAresta(listaVertice.get(i).getRotulo(), listaVertice.get(j).getRotulo())) {
-                        System.out.println(listaVertice.get(i).rotulo);
-                        possivel = true;
+        for (int i = 0; i < listaVertice.size(); i++) {
+            for (int j = 0; j < listaVertice.size(); j++) {
+                if (verificaAresta(listaVertice.get(i).getRotulo(), listaVertice.get(j).getRotulo())) {
+                    for (int k = 0; k < listaVertice.size(); k++) {
+                        if (verificaAresta(listaVertice.get(j).getRotulo(), listaVertice.get(k).getRotulo())) {
+                            if ((verificaAresta(listaVertice.get(k).rotulo, listaVertice.get(i).getRotulo())) && (i != j) && (i != k) && (j != k)) {
+                                System.out.println(listaVertice.get(i).rotulo);
+                                possivel = true;
+                            }
                         }
                     }
                 }

@@ -240,7 +240,7 @@ public class Principal extends javax.swing.JFrame {
             } else if (grafo.inserirAresta(verticeOrigem, verticeDestino)) {
                 campoHistorico.setText(campoHistorico.getText() + "\n A aresta foi inserida com sucesso.");
             } else {
-                campoHistorico.setText(campoHistorico.getText() + "\n A aresta já existe.");
+                campoHistorico.setText(campoHistorico.getText() + "\n Não foi possível inserir a aresta.");
             }
         }
     }//GEN-LAST:event_botaoAdicionarArestaActionPerformed
@@ -309,7 +309,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoRetornarArestasActionPerformed
 
     private void botaoImprimirGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoImprimirGrafoActionPerformed
-        campoHistorico.setText(campoHistorico.getText() + grafo.imprimeGrafo());
+        campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.imprimeGrafo());
     }//GEN-LAST:event_botaoImprimirGrafoActionPerformed
 
     private void botaoPlanarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPlanarActionPerformed
