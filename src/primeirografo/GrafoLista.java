@@ -20,7 +20,7 @@ public class GrafoLista {
     public boolean inserirAresta(String rotulo_origem, String rotulo_destino) {
         boolean possivel = false;
 
-        if ((verificaVertice(rotulo_origem)) && (verificaVertice(rotulo_origem)) && (!rotulo_origem.equals(rotulo_destino))) {
+        if ((verificaVertice(rotulo_origem)) && (verificaVertice(rotulo_destino)) && (!rotulo_origem.equals(rotulo_destino))) {
             for (Vertice vertice : listaVertice) {
                 if (vertice.rotulo.equals(rotulo_origem)) {
                     possivel = vertice.insereAresta(new Aresta(rotulo_destino));
