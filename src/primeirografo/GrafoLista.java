@@ -5,6 +5,13 @@ import java.util.ArrayList;
 public class GrafoLista {
 
     ArrayList<Vertice> listaVertice = new ArrayList<>();
+    private final boolean direcional;
+    private final boolean arestasTemPeso;
+
+    public GrafoLista(boolean direcional, boolean arestasTemPeso) {
+        this.direcional = direcional;
+        this.arestasTemPeso = arestasTemPeso;
+    }
 
     public boolean insereVertice(Vertice novoVertice) {
         for (Vertice vertice : listaVertice) {
@@ -17,16 +24,25 @@ public class GrafoLista {
         return true;
     }
 
-    public boolean inserirAresta(String rotulo_origem, String rotulo_destino) {
+    public boolean inserirAresta(String rotulo_origem, String rotulo_destino, int pesoAresta) {
         boolean possivel = false;
-
         if ((verificaVertice(rotulo_origem)) && (verificaVertice(rotulo_destino)) && (!rotulo_origem.equals(rotulo_destino))) {
             for (Vertice vertice : listaVertice) {
-                if (vertice.rotulo.equals(rotulo_origem)) {
-                    possivel = vertice.insereAresta(new Aresta(rotulo_destino));
+                if (vertice.getRotulo().equals(rotulo_origem)) {
+                    if (arestasTemPeso) {
+                        possivel = vertice.insereAresta(new Aresta(rotulo_destino, pesoAresta));
+                    } else {
+                        possivel = vertice.insereAresta(new Aresta(rotulo_destino));
+                    }
                 }
-                if (vertice.rotulo.equals(rotulo_destino)) {
-                    possivel = vertice.insereAresta(new Aresta(rotulo_origem));
+                if (!direcional) {
+                    if (vertice.getRotulo().equals(rotulo_destino)) {
+                        if (arestasTemPeso) {
+                            possivel = vertice.insereAresta(new Aresta(rotulo_origem, pesoAresta));
+                        } else {
+                            possivel = vertice.insereAresta(new Aresta(rotulo_origem));
+                        }
+                    }
                 }
             }
         }
@@ -100,7 +116,11 @@ public class GrafoLista {
             grafo = grafo + vertice.rotulo + ": ";
 
             for (Aresta aresta : vertice.listaAresta) {
-                grafo = grafo + aresta.destino + " ";
+                if (arestasTemPeso) {
+                    grafo = grafo + aresta.destino + "(" + aresta.getPeso() + ") ";
+                } else {
+                    grafo = grafo + aresta.destino + " ";
+                }
             }
             grafo = grafo + "\n";
         }
@@ -115,8 +135,9 @@ public class GrafoLista {
             qtdArestas = qtdArestas + vertice.getListaAresta().size();
         }
 
-        //Mudar futuramente quando for aceito grafos direcionais
-        qtdArestas = qtdArestas / 2;
+        if (!direcional) {
+            qtdArestas = qtdArestas / 2;
+        }
 
         return qtdArestas;
     }
@@ -164,5 +185,19 @@ public class GrafoLista {
             }
         }
         return null;
+    }
+    
+    public String bfs(String rotulo_origem){
+        return "";
+    }        
+    
+    public String dfs(String rotulo_origem){
+        return "";
+    }
+    
+    public String dijkstra(String rotulo_origem, String rotulo_destino){
+        //O rótulo destino pode ser vazio, verificar as diferenças do que 
+        //deve ser retornado.
+        return "";
     }
 }

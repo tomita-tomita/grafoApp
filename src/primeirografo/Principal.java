@@ -11,6 +11,7 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     GrafoLista grafo;
+    boolean arestasTemPeso;
 
     public Principal() {
         try {
@@ -209,37 +210,50 @@ public class Principal extends javax.swing.JFrame {
         botaoPlanar.setEnabled(ativa);
     }
 
-    private void botaoRemoverVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverVerticeActionPerformed
-        String rotulo = null;
+    private String pergunta(String mensagem) {
+        String resposta;
+        resposta = JOptionPane.showInputDialog(mensagem);
 
-        rotulo = JOptionPane.showInputDialog("Qual o rótulo do vértice?", "Digite o rótulo aqui...");
-
-        if ((rotulo == null) || (rotulo.equals(""))) {
-            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
+        if ((resposta == null) || (resposta.equals(""))) {
+            JOptionPane.showMessageDialog(null, "Resposta Incorreta");
         } else {
+            return resposta;
+        }
+        return "";
+    }
+
+    private void botaoRemoverVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverVerticeActionPerformed
+        String rotulo = pergunta("Qual o rótulo do vértice?");
+
+        if (!(rotulo == null) && !(rotulo.equals(""))) {
             campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeVertice(rotulo));
         }
     }//GEN-LAST:event_botaoRemoverVerticeActionPerformed
 
     private void botaoVerificarVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerificarVerticeActionPerformed
-        String rotulo = null;
+        String rotulo = pergunta("Qual o rótulo do vértice?");
 
-        rotulo = JOptionPane.showInputDialog("Qual o rótulo do vértice?", "Digite o rótulo aqui...");
-
-        if ((rotulo == null) || (rotulo.equals(""))) {
-            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
-        } else if (grafo.verificaVertice(rotulo)) {
-            campoHistorico.setText(campoHistorico.getText() + "\n O Vértice foi encontrado.");
-        } else {
-            campoHistorico.setText(campoHistorico.getText() + "\n O Vértice não existe.");
-        }
+        if (!(rotulo == null) && !(rotulo.equals(""))) {
+            if (grafo.verificaVertice(rotulo)) {
+                campoHistorico.setText(campoHistorico.getText() + "\n O Vértice foi encontrado.");
+            } else {
+                campoHistorico.setText(campoHistorico.getText() + "\n O Vértice não existe.");
+            }
     }//GEN-LAST:event_botaoVerificarVerticeActionPerformed
+    }
 
     private void botaoCriarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCriarGrafoActionPerformed
         if (botaoCriarGrafo.getText().equals("Criar Grafo")) {
-            grafo = new GrafoLista();
-            botaoCriarGrafo.setText("Remover Grafo");
-            ativaBotoes(true);
+
+            String direcional = pergunta("O Grafo é Direcional? (S/N)");
+            String possuiPeso = pergunta("As arestas devem possuir peso? (S/N)");
+
+            if (!(direcional.equals("")) && !(possuiPeso.equals(""))) {
+                grafo = new GrafoLista(direcional.equals("S"), possuiPeso.equals("S"));
+                arestasTemPeso = possuiPeso.equals("S");
+                botaoCriarGrafo.setText("Remover Grafo");
+                ativaBotoes(true);
+            }
         } else {
             grafo = null;
             botaoCriarGrafo.setText("Criar Grafo");
@@ -248,13 +262,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCriarGrafoActionPerformed
 
     private void botaoAdicionarVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarVerticeActionPerformed
-        String rotulo = null;
+        String rotulo = pergunta("Qual o rótulo do vértice?");
 
-        rotulo = JOptionPane.showInputDialog("Qual o rótulo do vértice?", "Digite o rótulo aqui...");
-
-        if ((rotulo == null) || (rotulo.equals(""))) {
-            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
-        } else {
+        if (!(rotulo.equals(""))) {
             Vertice novoVertice = new Vertice(rotulo);
 
             if (grafo.insereVertice(novoVertice)) {
@@ -267,77 +277,54 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAdicionarVerticeActionPerformed
 
     private void botaoAdicionarArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarArestaActionPerformed
-        String verticeOrigem = null;
-        String verticeDestino = null;
+        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
+        String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
+        
+        int pesoAresta =  Integer.parseInt(pergunta("Qual o peso desta aresta?"));
 
-        verticeOrigem = JOptionPane.showInputDialog("Qual o rótulo do vértice de origem?", "Digite o rótulo aqui...");
-
-        if ((verticeOrigem == null) || (verticeOrigem.equals(""))) {
+        if ((verticeOrigem.equals(""))) {
             JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
         } else {
 
-            verticeDestino = JOptionPane.showInputDialog("Qual o rótulo do vértice de destino?", "Digite o rótulo aqui...");
-
-            if ((verticeDestino == null) || (verticeDestino.equals(""))) {
-                JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
-            } else if (grafo.inserirAresta(verticeOrigem, verticeDestino)) {
-                campoHistorico.setText(campoHistorico.getText() + "\n A aresta foi inserida com sucesso.");
-            } else {
-                campoHistorico.setText(campoHistorico.getText() + "\n Não foi possível inserir a aresta.");
+            if (!(verticeDestino.equals(""))) {
+                if (grafo.inserirAresta(verticeOrigem, verticeDestino, pesoAresta)) {
+                    campoHistorico.setText(campoHistorico.getText() + "\n A aresta foi inserida com sucesso.");
+                } else {
+                    campoHistorico.setText(campoHistorico.getText() + "\n Não foi possível inserir a aresta.");
+                }
             }
         }
     }//GEN-LAST:event_botaoAdicionarArestaActionPerformed
 
     private void botaoRemoverArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverArestaActionPerformed
-        String verticeOrigem = null;
-        String verticeDestino = null;
+        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
+        String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
 
-        verticeOrigem = JOptionPane.showInputDialog("Qual o rótulo do vértice de origem?", "Digite o rótulo aqui...");
-
-        if ((verticeOrigem == null) || (verticeOrigem.equals(""))) {
-            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
-        } else {
-
-            verticeDestino = JOptionPane.showInputDialog("Qual o rótulo do vértice de destino?", "Digite o rótulo aqui...");
-
-            if ((verticeDestino == null) || (verticeDestino.equals(""))) {
-                JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
-            } else {
+        if (!(verticeOrigem.equals(""))) {
+            if (!(verticeDestino.equals(""))) {
                 campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeAresta(verticeOrigem, verticeDestino));
             }
         }
     }//GEN-LAST:event_botaoRemoverArestaActionPerformed
 
     private void botaoVerificarArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerificarArestaActionPerformed
-        String verticeOrigem = null;
-        String verticeDestino = null;
+        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
+        String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
 
-        verticeOrigem = JOptionPane.showInputDialog("Qual o rótulo do vértice de origem?", "Digite o rótulo aqui...");
-
-        if ((verticeOrigem == null) || (verticeOrigem.equals(""))) {
-            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
-        } else {
-
-            verticeDestino = JOptionPane.showInputDialog("Qual o rótulo do vértice de destino?", "Digite o rótulo aqui...");
-
-            if ((verticeDestino == null) || (verticeDestino.equals(""))) {
-                JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
-            } else if (grafo.verificaAresta(verticeOrigem, verticeDestino)) {
-                campoHistorico.setText(campoHistorico.getText() + "\n A aresta foi encontrada.");
-            } else {
-                campoHistorico.setText(campoHistorico.getText() + "\n A aresta não existe.");
+        if (!(verticeOrigem.equals(""))) {
+            if (!(verticeDestino.equals(""))) {
+                if (grafo.verificaAresta(verticeOrigem, verticeDestino)) {
+                    campoHistorico.setText(campoHistorico.getText() + "\n A aresta foi encontrada.");
+                } else {
+                    campoHistorico.setText(campoHistorico.getText() + "\n A aresta não existe.");
+                }
             }
         }
     }//GEN-LAST:event_botaoVerificarArestaActionPerformed
 
     private void botaoRetornarArestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRetornarArestasActionPerformed
-        String rotulo = null;
-
-        rotulo = JOptionPane.showInputDialog("Qual o rótulo do vértice?", "Digite o rótulo aqui...");
-
-        if ((rotulo == null) || (rotulo.equals(""))) {
-            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
-        } else {
+        String rotulo = pergunta("Qual o rótulo do vértice?");
+        if (!(rotulo.equals(""))) {
             ArrayList<Aresta> arestas = grafo.retornarArestas(rotulo);
 
             if (arestas != null) {
