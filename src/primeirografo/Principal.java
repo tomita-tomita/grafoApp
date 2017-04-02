@@ -12,6 +12,7 @@ public class Principal extends javax.swing.JFrame {
      */
     GrafoLista grafo;
     boolean arestasTemPeso;
+    ArrayList<String> vesticesVisitados = new ArrayList<>();  
 
     public Principal() {
         try {
@@ -54,7 +55,6 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Grafos");
-        setPreferredSize(new java.awt.Dimension(599, 358));
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
@@ -180,7 +180,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addContainerGap(161, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,7 +226,12 @@ public class Principal extends javax.swing.JFrame {
         String rotulo = pergunta("Qual o rótulo do vértice?");
 
         if (!(rotulo == null) && !(rotulo.equals(""))) {
-            campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeVertice(rotulo));
+            this.vesticesVisitados = grafo.dfs(rotulo);
+            for (String vesticesVisitado : vesticesVisitados) {
+                campoHistorico.setText(campoHistorico.getText()+vesticesVisitado+", ");
+            }
+            grafo.resetVisitados();
+            //campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeVertice(rotulo));
         }
     }//GEN-LAST:event_botaoRemoverVerticeActionPerformed
 
@@ -262,17 +267,18 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCriarGrafoActionPerformed
 
     private void botaoAdicionarVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarVerticeActionPerformed
-        String rotulo = pergunta("Qual o rótulo do vértice?");
-
-        if (!(rotulo.equals(""))) {
-            Vertice novoVertice = new Vertice(rotulo);
-
-            if (grafo.insereVertice(novoVertice)) {
-                campoHistorico.setText(campoHistorico.getText() + "\nO vértice com o rótulo " + rotulo + " foi inserido com sucesso.");
-            } else {
-                campoHistorico.setText(campoHistorico.getText() + "\nO vértice com o rótulo " + rotulo + " já existe.");
-            }
-        }
+        grafo.criarGrafoTeste();
+//        String rotulo = pergunta("Qual o rótulo do vértice?");
+//
+//        if (!(rotulo.equals(""))) {
+//            Vertice novoVertice = new Vertice(rotulo);
+//
+//            if (grafo.insereVertice(novoVertice)) {
+//                campoHistorico.setText(campoHistorico.getText() + "\nO vértice com o rótulo " + rotulo + " foi inserido com sucesso.");
+//            } else {
+//                campoHistorico.setText(campoHistorico.getText() + "\nO vértice com o rótulo " + rotulo + " já existe.");
+//            }
+//        }
 
     }//GEN-LAST:event_botaoAdicionarVerticeActionPerformed
 
@@ -298,13 +304,18 @@ public class Principal extends javax.swing.JFrame {
 
     private void botaoRemoverArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverArestaActionPerformed
         String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
-        String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
+        this.vesticesVisitados = grafo.bfs(verticeOrigem);
+        for (String vesticesVisitado : vesticesVisitados) {
+            campoHistorico.setText(campoHistorico.getText()+vesticesVisitado+", ");
+        }        
+        grafo.resetVisitados();
+        //String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
 
-        if (!(verticeOrigem.equals(""))) {
-            if (!(verticeDestino.equals(""))) {
-                campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeAresta(verticeOrigem, verticeDestino));
-            }
-        }
+//        if (!(verticeOrigem.equals(""))) {
+//            if (!(verticeDestino.equals(""))) {
+//                campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeAresta(verticeOrigem, verticeDestino));
+//            }
+//        }
     }//GEN-LAST:event_botaoRemoverArestaActionPerformed
 
     private void botaoVerificarArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerificarArestaActionPerformed

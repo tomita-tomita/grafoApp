@@ -6,8 +6,10 @@ public class Vertice {
 
     ArrayList<Aresta> listaAresta = new ArrayList<>();
     String rotulo;
+    Boolean visitado;
 
     Vertice(String rotulo) {
+        this.visitado = false;
         this.rotulo = rotulo;
     }   
     
@@ -30,4 +32,8 @@ public class Vertice {
     public String getRotulo() {
         return rotulo;
     }        
+    
+    public Boolean getVisitado(){
+        return this.visitado;
+    }
 }

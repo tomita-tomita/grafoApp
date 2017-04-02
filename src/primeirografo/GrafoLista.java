@@ -1,14 +1,26 @@
 package primeirografo;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
 
 public class GrafoLista {
 
-    ArrayList<Vertice> listaVertice = new ArrayList<>();
+    ArrayList<Vertice> listaVertice = new ArrayList<>();   
+    ArrayList<String> vesticesVisitados = new ArrayList<>();
+    /*BSF*/    
+    private Stack<Vertice> filaVertices;    
+   
+    /*DSF*/    
+    private Stack<Vertice> pilhaVertices;  
+    
     private final boolean direcional;
     private final boolean arestasTemPeso;
 
     public GrafoLista(boolean direcional, boolean arestasTemPeso) {
+        this.pilhaVertices = new Stack<>();
+        this.filaVertices = new Stack<>();
         this.direcional = direcional;
         this.arestasTemPeso = arestasTemPeso;
     }
@@ -187,12 +199,90 @@ public class GrafoLista {
         return null;
     }
     
-    public String bfs(String rotulo_origem){
-        return "";
+    public Vertice getVertice(String rotulo){
+        for (Vertice vertice : listaVertice) {
+            if (vertice.getRotulo().equals(rotulo)) {
+                return vertice;
+            }
+        }        
+        return null;
+    }
+    
+    public ArrayList<String> bfs(String vertice){
+        Vertice verticeAtual = getVertice(vertice);
+        verticeAtual.visitado = true;         
+        this.filaVertices.add(verticeAtual);
+        while (!this.filaVertices.isEmpty()) {            
+            this.vesticesVisitados.add(this.filaVertices.firstElement().getRotulo());
+            this.filaVertices.remove(0);
+            for (Aresta aresta : verticeAtual.listaAresta) {                
+                if(!getVertice(aresta.getVertice()).getVisitado()){
+                    getVertice(aresta.getVertice()).visitado = true;
+                    this.filaVertices.add(getVertice(aresta.getVertice()));   
+                }  
+            }     
+        }        
+        for (Vertice verticeAll : listaVertice) {
+            if(!verticeAll.getVisitado()){
+                bfs(verticeAll.getRotulo());
+            }
+        }             
+        return this.vesticesVisitados;
     }        
     
-    public String dfs(String rotulo_origem){
-        return "";
+    public void criarGrafoTeste(){
+        Vertice a = new Vertice("A");
+        Vertice b = new Vertice("B");
+        Vertice c = new Vertice("C");
+        Vertice d = new Vertice("D");
+        Vertice e = new Vertice("E");
+        Vertice f = new Vertice("F");
+        Vertice g = new Vertice("G");
+        insereVertice(a);
+        insereVertice(b);
+        insereVertice(c);
+        insereVertice(d);
+        insereVertice(e);
+        insereVertice(f);
+        insereVertice(g);
+        inserirAresta("A", "B", 1);        
+        inserirAresta("A", "C", 2);        
+        inserirAresta("A", "D", 3);        
+        inserirAresta("B", "D", 4);        
+        inserirAresta("C", "E", 5);        
+        inserirAresta("C", "F", 6);        
+        inserirAresta("E", "F", 7);        
+        inserirAresta("E", "F", 8);        
+    }
+    
+    public void resetVisitados (){
+        for (Vertice vertice : listaVertice) {
+            vertice.visitado = false;         
+        }
+        this.vesticesVisitados.clear();
+    }
+    
+    public ArrayList<String> dfs(String rotulo_origem){
+        Vertice verticeAtual = getVertice(rotulo_origem);        
+        verticeAtual.visitado = true;       
+        this.vesticesVisitados.add(verticeAtual.getRotulo());
+        this.pilhaVertices.add(verticeAtual);
+        for (Aresta aresta : verticeAtual.listaAresta) {            
+            if(!getVertice(aresta.getVertice()).getVisitado()){
+                dfs(aresta.getVertice());
+            }
+        }
+        this.pilhaVertices.remove(verticeAtual);        
+        if(!this.pilhaVertices.isEmpty()){
+            for (Vertice vertice : listaVertice) {
+                if(!vertice.getVisitado()){
+                    dfs(vertice.getRotulo());
+                }
+            }            
+        }else{           
+           return this.vesticesVisitados;           
+        }        
+        return null;
     }
     
     public String dijkstra(String rotulo_origem, String rotulo_destino){
