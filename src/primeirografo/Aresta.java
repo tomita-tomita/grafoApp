@@ -21,4 +21,8 @@ public class Aresta {
     public int getPeso() {
         return peso;
     }        
+
+    public String getDestino() {
+        return destino;
+    }        
 }

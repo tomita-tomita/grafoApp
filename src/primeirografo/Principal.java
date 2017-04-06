@@ -12,7 +12,7 @@ public class Principal extends javax.swing.JFrame {
      */
     GrafoLista grafo;
     boolean arestasTemPeso;
-    ArrayList<String> vesticesVisitados = new ArrayList<>();  
+    ArrayList<String> vesticesVisitados = new ArrayList<>();
 
     public Principal() {
         try {
@@ -37,6 +37,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         botaoCriarGrafo = new javax.swing.JButton();
         botaoAdicionarVertice = new javax.swing.JButton();
+        botaoVerticesAutomaticos = new javax.swing.JButton();
         botaoAdicionarAresta = new javax.swing.JButton();
         botaoRemoverAresta = new javax.swing.JButton();
         botaoRemoverVertice = new javax.swing.JButton();
@@ -45,6 +46,9 @@ public class Principal extends javax.swing.JFrame {
         botaoRetornarArestas = new javax.swing.JButton();
         botaoImprimirGrafo = new javax.swing.JButton();
         botaoPlanar = new javax.swing.JButton();
+        botaoBuscaEmLargura = new javax.swing.JButton();
+        botaoBuscaEmProfundidade = new javax.swing.JButton();
+        botaoDijkstra = new javax.swing.JButton();
         botaoLimparHistorico = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -55,10 +59,11 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Grafos");
+        setPreferredSize(new java.awt.Dimension(810, 451));
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
-        jPanel1.setLayout(new java.awt.GridLayout(11, 0));
+        jPanel1.setLayout(new java.awt.GridLayout(15, 0));
 
         botaoCriarGrafo.setText("Criar Grafo");
         botaoCriarGrafo.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +80,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jPanel1.add(botaoAdicionarVertice);
+
+        botaoVerticesAutomaticos.setText("Vértices Automáticos (Testes)");
+        botaoVerticesAutomaticos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVerticesAutomaticosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoVerticesAutomaticos);
 
         botaoAdicionarAresta.setText("Adicionar Aresta");
         botaoAdicionarAresta.addActionListener(new java.awt.event.ActionListener() {
@@ -140,6 +153,30 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanel1.add(botaoPlanar);
 
+        botaoBuscaEmLargura.setText("Busca em Largura");
+        botaoBuscaEmLargura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoBuscaEmLarguraActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoBuscaEmLargura);
+
+        botaoBuscaEmProfundidade.setText("Busca em Profundidade");
+        botaoBuscaEmProfundidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoBuscaEmProfundidadeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoBuscaEmProfundidade);
+
+        botaoDijkstra.setText("Dijkstra");
+        botaoDijkstra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoDijkstraActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botaoDijkstra);
+
         botaoLimparHistorico.setText("Limpar Historico");
         botaoLimparHistorico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,7 +185,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanel1.add(botaoLimparHistorico);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jPanel1, java.awt.BorderLayout.LINE_START);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Histórico"));
         jPanel2.setPreferredSize(new java.awt.Dimension(400, 439));
@@ -160,12 +197,12 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_END);
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jPanel3.setMinimumSize(new java.awt.Dimension(50, 50));
         jPanel3.setPreferredSize(new java.awt.Dimension(100, 50));
 
-        jLabel1.setText("Trabalho de Grafos (M1.1)");
+        jLabel1.setText("Trabalho de Grafos (M1.2)");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 19, 227));
@@ -180,7 +217,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addContainerGap(427, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,6 +228,8 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel1.getAccessibleContext().setAccessibleName("Trabalho de Grafos (M1.2)");
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
@@ -208,57 +247,64 @@ public class Principal extends javax.swing.JFrame {
         botaoVerificarAresta.setEnabled(ativa);
         botaoVerificarVertice.setEnabled(ativa);
         botaoPlanar.setEnabled(ativa);
+        botaoBuscaEmLargura.setEnabled(ativa);
+        botaoBuscaEmProfundidade.setEnabled(ativa);
+        botaoDijkstra.setEnabled(ativa);
+        botaoVerticesAutomaticos.setEnabled(ativa);
     }
 
     private String pergunta(String mensagem) {
-        String resposta;
-        resposta = JOptionPane.showInputDialog(mensagem);
-
-        if ((resposta == null) || (resposta.equals(""))) {
-            JOptionPane.showMessageDialog(null, "Resposta Incorreta");
-        } else {
-            return resposta;
-        }
-        return "";
+        return JOptionPane.showInputDialog(mensagem);
     }
 
     private void botaoRemoverVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverVerticeActionPerformed
         String rotulo = pergunta("Qual o rótulo do vértice?");
 
-        if (!(rotulo == null) && !(rotulo.equals(""))) {
-            this.vesticesVisitados = grafo.dfs(rotulo);
-            for (String vesticesVisitado : vesticesVisitados) {
-                campoHistorico.setText(campoHistorico.getText()+vesticesVisitado+", ");
-            }
-            grafo.resetVisitados();
-            //campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeVertice(rotulo));
+        if (rotulo.equals("")) {
+            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+            return;
         }
+
+        campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeVertice(rotulo));
     }//GEN-LAST:event_botaoRemoverVerticeActionPerformed
 
     private void botaoVerificarVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerificarVerticeActionPerformed
         String rotulo = pergunta("Qual o rótulo do vértice?");
 
-        if (!(rotulo == null) && !(rotulo.equals(""))) {
-            if (grafo.verificaVertice(rotulo)) {
-                campoHistorico.setText(campoHistorico.getText() + "\n O Vértice foi encontrado.");
-            } else {
-                campoHistorico.setText(campoHistorico.getText() + "\n O Vértice não existe.");
-            }
+        if (rotulo.equals("")) {
+            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+            return;
+        }
+
+        if (grafo.verificaVertice(rotulo)) {
+            campoHistorico.setText(campoHistorico.getText() + "\nO Vértice foi encontrado.");
+        } else {
+            campoHistorico.setText(campoHistorico.getText() + "\nO Vértice não existe.");
     }//GEN-LAST:event_botaoVerificarVerticeActionPerformed
     }
 
     private void botaoCriarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCriarGrafoActionPerformed
         if (botaoCriarGrafo.getText().equals("Criar Grafo")) {
 
-            String direcional = pergunta("O Grafo é Direcional? (S/N)");
-            String possuiPeso = pergunta("As arestas devem possuir peso? (S/N)");
+            String direcional = pergunta("O Grafo é Direcional? (S/N)").toUpperCase();
 
-            if (!(direcional.equals("")) && !(possuiPeso.equals(""))) {
-                grafo = new GrafoLista(direcional.equals("S"), possuiPeso.equals("S"));
-                arestasTemPeso = possuiPeso.equals("S");
-                botaoCriarGrafo.setText("Remover Grafo");
-                ativaBotoes(true);
+            if (!direcional.equals("S") && (!direcional.equals("N"))) {
+                campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+                return;
             }
+
+            String possuiPeso = pergunta("As arestas devem possuir peso? (S/N)").toUpperCase();
+
+            if (!possuiPeso.equals("S") && (!possuiPeso.equals("N"))) {
+                campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+                return;
+            }
+
+            grafo = new GrafoLista(direcional.equals("S"), possuiPeso.equals("S"));
+            arestasTemPeso = possuiPeso.equals("S");
+            botaoCriarGrafo.setText("Remover Grafo");
+            ativaBotoes(true);
+
         } else {
             grafo = null;
             botaoCriarGrafo.setText("Criar Grafo");
@@ -267,86 +313,97 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCriarGrafoActionPerformed
 
     private void botaoAdicionarVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarVerticeActionPerformed
-        grafo.criarGrafoTeste();
-//        String rotulo = pergunta("Qual o rótulo do vértice?");
-//
-//        if (!(rotulo.equals(""))) {
-//            Vertice novoVertice = new Vertice(rotulo);
-//
-//            if (grafo.insereVertice(novoVertice)) {
-//                campoHistorico.setText(campoHistorico.getText() + "\nO vértice com o rótulo " + rotulo + " foi inserido com sucesso.");
-//            } else {
-//                campoHistorico.setText(campoHistorico.getText() + "\nO vértice com o rótulo " + rotulo + " já existe.");
-//            }
-//        }
+        String rotulo = pergunta("Qual o rótulo do vértice?");
+
+        if (rotulo.equals("")) {
+            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+            return;
+        }
+
+        Vertice novoVertice = new Vertice(rotulo);
+
+        if (grafo.insereVertice(novoVertice)) {
+            campoHistorico.setText(campoHistorico.getText() + "\nO vértice com o rótulo " + rotulo + " foi inserido com sucesso.");
+        } else {
+            campoHistorico.setText(campoHistorico.getText() + "\nO vértice com o rótulo " + rotulo + " já existe.");
+        }
 
     }//GEN-LAST:event_botaoAdicionarVerticeActionPerformed
 
     private void botaoAdicionarArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarArestaActionPerformed
+        int pesoAresta = 0;
         String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
         String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
-        
-        int pesoAresta =  Integer.parseInt(pergunta("Qual o peso desta aresta?"));
 
-        if ((verticeOrigem.equals(""))) {
-            JOptionPane.showMessageDialog(null, "O rótulo preenchido é inválido");
-        } else {
+        if (verticeOrigem.equals("") || (verticeDestino.equals(""))) {
+            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+            return;
+        }
 
-            if (!(verticeDestino.equals(""))) {
-                if (grafo.inserirAresta(verticeOrigem, verticeDestino, pesoAresta)) {
-                    campoHistorico.setText(campoHistorico.getText() + "\n A aresta foi inserida com sucesso.");
-                } else {
-                    campoHistorico.setText(campoHistorico.getText() + "\n Não foi possível inserir a aresta.");
-                }
+        if (arestasTemPeso) {
+            try {
+                pesoAresta = Integer.parseInt(pergunta("Qual o peso desta aresta?"));
+            } catch (Exception e) {
+                campoHistorico.setText(campoHistorico.getText() + "\nPeso inválido");
+                return;
             }
+        }
+
+        if (grafo.inserirAresta(verticeOrigem, verticeDestino, pesoAresta)) {
+            campoHistorico.setText(campoHistorico.getText() + "\nA aresta foi inserida com sucesso.");
+        } else {
+            campoHistorico.setText(campoHistorico.getText() + "\nNão foi possível inserir a aresta.");
         }
     }//GEN-LAST:event_botaoAdicionarArestaActionPerformed
 
     private void botaoRemoverArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverArestaActionPerformed
         String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
-        this.vesticesVisitados = grafo.bfs(verticeOrigem);
-        for (String vesticesVisitado : vesticesVisitados) {
-            campoHistorico.setText(campoHistorico.getText()+vesticesVisitado+", ");
-        }        
-        grafo.resetVisitados();
-        //String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
+        String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
 
-//        if (!(verticeOrigem.equals(""))) {
-//            if (!(verticeDestino.equals(""))) {
-//                campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeAresta(verticeOrigem, verticeDestino));
-//            }
-//        }
+        if (verticeOrigem.equals("") || (verticeDestino.equals(""))) {
+            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+            return;
+        }
+
+        campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeAresta(verticeOrigem, verticeDestino));
     }//GEN-LAST:event_botaoRemoverArestaActionPerformed
 
     private void botaoVerificarArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerificarArestaActionPerformed
         String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
         String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
 
-        if (!(verticeOrigem.equals(""))) {
-            if (!(verticeDestino.equals(""))) {
-                if (grafo.verificaAresta(verticeOrigem, verticeDestino)) {
-                    campoHistorico.setText(campoHistorico.getText() + "\n A aresta foi encontrada.");
-                } else {
-                    campoHistorico.setText(campoHistorico.getText() + "\n A aresta não existe.");
-                }
-            }
+        if (verticeOrigem.equals("") || (verticeDestino.equals(""))) {
+            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+            return;
         }
+
+        if (grafo.verificaAresta(verticeOrigem, verticeDestino)) {
+            campoHistorico.setText(campoHistorico.getText() + "\nA aresta foi encontrada.");
+        } else {
+            campoHistorico.setText(campoHistorico.getText() + "\nA aresta não existe.");
+        }
+
     }//GEN-LAST:event_botaoVerificarArestaActionPerformed
 
     private void botaoRetornarArestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRetornarArestasActionPerformed
         String rotulo = pergunta("Qual o rótulo do vértice?");
-        if (!(rotulo.equals(""))) {
-            ArrayList<Aresta> arestas = grafo.retornarArestas(rotulo);
 
-            if (arestas != null) {
-                campoHistorico.setText(campoHistorico.getText() + "\nArestas para o Vértice " + rotulo + ": ");
-                for (Aresta aresta : arestas) {
-                    campoHistorico.setText(campoHistorico.getText() + aresta.getVertice() + " | ");
-                }
-            } else {
-                campoHistorico.setText(campoHistorico.getText() + "\nO vértice não possui arestas.");
-            }
+        if (rotulo.equals("")) {
+            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+            return;
         }
+
+        ArrayList<Aresta> arestas = grafo.retornarArestas(rotulo);
+
+        if (arestas != null) {
+            campoHistorico.setText(campoHistorico.getText() + "\nArestas para o Vértice " + rotulo + ": ");
+            for (Aresta aresta : arestas) {
+                campoHistorico.setText(campoHistorico.getText() + aresta.getVertice() + " | ");
+            }
+        } else {
+            campoHistorico.setText(campoHistorico.getText() + "\nO vértice não possui arestas.");
+        }
+
     }//GEN-LAST:event_botaoRetornarArestasActionPerformed
 
     private void botaoImprimirGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoImprimirGrafoActionPerformed
@@ -356,19 +413,64 @@ public class Principal extends javax.swing.JFrame {
     private void botaoPlanarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPlanarActionPerformed
         if (grafo.listaVertice.size() <= 0) {
             campoHistorico.setText(campoHistorico.getText() + "\nNão existem vértices.");
+        } else if (grafo.verificaPlanar()) {
+            campoHistorico.setText(campoHistorico.getText() + "\nO grafo pode ser planar.");
         } else {
-
-            if (grafo.verificaPlanar()) {
-                campoHistorico.setText(campoHistorico.getText() + "\nO grafo pode ser planar.");
-            } else {
-                campoHistorico.setText(campoHistorico.getText() + "\nO grafo não é planar.");
-            }
+            campoHistorico.setText(campoHistorico.getText() + "\nO grafo não é planar.");
         }
     }//GEN-LAST:event_botaoPlanarActionPerformed
 
     private void botaoLimparHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparHistoricoActionPerformed
         campoHistorico.setText("");
     }//GEN-LAST:event_botaoLimparHistoricoActionPerformed
+
+    private void botaoBuscaEmLarguraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscaEmLarguraActionPerformed
+        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
+        
+        if (verticeOrigem.equals("")) {
+            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+            return;
+        }
+        
+        this.vesticesVisitados = grafo.bfs(verticeOrigem);
+        for (String vesticesVisitado : vesticesVisitados) {
+            campoHistorico.setText(campoHistorico.getText() + vesticesVisitado + ", ");
+        }
+        grafo.resetVisitados();
+    }//GEN-LAST:event_botaoBuscaEmLarguraActionPerformed
+
+    private void botaoBuscaEmProfundidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscaEmProfundidadeActionPerformed
+        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
+        
+        if (verticeOrigem.equals("")) {
+            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+            return;
+        }
+        
+        this.vesticesVisitados = grafo.dfs(verticeOrigem);
+        for (String vesticesVisitado : vesticesVisitados) {
+            campoHistorico.setText(campoHistorico.getText() + vesticesVisitado + ", ");
+        }
+        grafo.resetVisitados();
+    }//GEN-LAST:event_botaoBuscaEmProfundidadeActionPerformed
+
+    private void botaoDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDijkstraActionPerformed
+        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
+        String verticeDestino = pergunta("Qual o rótulo do vértice de origem?");
+        
+        if (verticeOrigem.equals("")) {
+            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+            return;
+        }
+        
+        campoHistorico.setText(grafo.dijkstra(verticeOrigem, verticeDestino));
+        
+        grafo.resetVisitados();                                        
+    }//GEN-LAST:event_botaoDijkstraActionPerformed
+
+    private void botaoVerticesAutomaticosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerticesAutomaticosActionPerformed
+        grafo.criarGrafoTeste();
+    }//GEN-LAST:event_botaoVerticesAutomaticosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -416,7 +518,10 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionarAresta;
     private javax.swing.JButton botaoAdicionarVertice;
+    private javax.swing.JButton botaoBuscaEmLargura;
+    private javax.swing.JButton botaoBuscaEmProfundidade;
     private javax.swing.JButton botaoCriarGrafo;
+    private javax.swing.JButton botaoDijkstra;
     private javax.swing.JButton botaoImprimirGrafo;
     private javax.swing.JButton botaoLimparHistorico;
     private javax.swing.JButton botaoPlanar;
@@ -425,6 +530,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton botaoRetornarArestas;
     private javax.swing.JButton botaoVerificarAresta;
     private javax.swing.JButton botaoVerificarVertice;
+    private javax.swing.JButton botaoVerticesAutomaticos;
     private javax.swing.JTextArea campoHistorico;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -1,20 +1,20 @@
 package primeirografo;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
+import java.util.Collections;
 
 public class GrafoLista {
 
-    ArrayList<Vertice> listaVertice = new ArrayList<>();   
+    ArrayList<Vertice> listaVertice = new ArrayList<>();
     ArrayList<String> vesticesVisitados = new ArrayList<>();
-    /*BSF*/    
-    private Stack<Vertice> filaVertices;    
-   
-    /*DSF*/    
-    private Stack<Vertice> pilhaVertices;  
-    
+    /*BSF*/
+    private Stack<Vertice> filaVertices;
+
+    /*DSF*/
+    private Stack<Vertice> pilhaVertices;
+
     private final boolean direcional;
     private final boolean arestasTemPeso;
 
@@ -198,96 +198,155 @@ public class GrafoLista {
         }
         return null;
     }
-    
-    public Vertice getVertice(String rotulo){
+
+    public Vertice getVertice(String rotulo) {
         for (Vertice vertice : listaVertice) {
             if (vertice.getRotulo().equals(rotulo)) {
                 return vertice;
             }
-        }        
+        }
         return null;
     }
-    
-    public ArrayList<String> bfs(String vertice){
+
+    public ArrayList<String> bfs(String vertice) {
         Vertice verticeAtual = getVertice(vertice);
-        verticeAtual.visitado = true;         
+        verticeAtual.visitado = true;
         this.filaVertices.add(verticeAtual);
-        while (!this.filaVertices.isEmpty()) {            
+        while (!this.filaVertices.isEmpty()) {
             this.vesticesVisitados.add(this.filaVertices.firstElement().getRotulo());
             this.filaVertices.remove(0);
-            for (Aresta aresta : verticeAtual.listaAresta) {                
-                if(!getVertice(aresta.getVertice()).getVisitado()){
+            for (Aresta aresta : verticeAtual.listaAresta) {
+                if (!getVertice(aresta.getVertice()).getVisitado()) {
                     getVertice(aresta.getVertice()).visitado = true;
-                    this.filaVertices.add(getVertice(aresta.getVertice()));   
-                }  
-            }     
-        }        
+                    this.filaVertices.add(getVertice(aresta.getVertice()));
+                }
+            }
+        }
         for (Vertice verticeAll : listaVertice) {
-            if(!verticeAll.getVisitado()){
+            if (!verticeAll.getVisitado()) {
                 bfs(verticeAll.getRotulo());
             }
-        }             
+        }
         return this.vesticesVisitados;
-    }        
-    
-    public void criarGrafoTeste(){
+    }
+
+    public void criarGrafoTeste() {
         Vertice a = new Vertice("A");
         Vertice b = new Vertice("B");
         Vertice c = new Vertice("C");
         Vertice d = new Vertice("D");
-        Vertice e = new Vertice("E");
-        Vertice f = new Vertice("F");
-        Vertice g = new Vertice("G");
+        Vertice e = new Vertice("E");        
         insereVertice(a);
         insereVertice(b);
         insereVertice(c);
         insereVertice(d);
-        insereVertice(e);
-        insereVertice(f);
-        insereVertice(g);
-        inserirAresta("A", "B", 1);        
-        inserirAresta("A", "C", 2);        
-        inserirAresta("A", "D", 3);        
-        inserirAresta("B", "D", 4);        
-        inserirAresta("C", "E", 5);        
-        inserirAresta("C", "F", 6);        
-        inserirAresta("E", "F", 7);        
-        inserirAresta("E", "F", 8);        
+        insereVertice(e);        
+        inserirAresta("A", "B", 3);
+        inserirAresta("A", "C", 5);        
+        inserirAresta("A", "D", 6);        
+        inserirAresta("A", "E", 8);
+        inserirAresta("B", "D", 2);        
+        inserirAresta("B", "E", 11);
+        inserirAresta("C", "E", 2);
     }
-    
-    public void resetVisitados (){
+
+    public void resetVisitados() {
         for (Vertice vertice : listaVertice) {
-            vertice.visitado = false;         
+            vertice.visitado = false;
+            vertice.setRotulo_pai("");
         }
         this.vesticesVisitados.clear();
     }
-    
-    public ArrayList<String> dfs(String rotulo_origem){
-        Vertice verticeAtual = getVertice(rotulo_origem);        
-        verticeAtual.visitado = true;       
+
+    public ArrayList<String> dfs(String rotulo_origem) {
+        Vertice verticeAtual = getVertice(rotulo_origem);
+        verticeAtual.visitado = true;
         this.vesticesVisitados.add(verticeAtual.getRotulo());
         this.pilhaVertices.add(verticeAtual);
-        for (Aresta aresta : verticeAtual.listaAresta) {            
-            if(!getVertice(aresta.getVertice()).getVisitado()){
+        for (Aresta aresta : verticeAtual.listaAresta) {
+            if (!getVertice(aresta.getVertice()).getVisitado()) {
                 dfs(aresta.getVertice());
             }
         }
-        this.pilhaVertices.remove(verticeAtual);        
-        if(!this.pilhaVertices.isEmpty()){
+        this.pilhaVertices.remove(verticeAtual);
+        if (!this.pilhaVertices.isEmpty()) {
             for (Vertice vertice : listaVertice) {
-                if(!vertice.getVisitado()){
+                if (!vertice.getVisitado()) {
                     dfs(vertice.getRotulo());
                 }
-            }            
-        }else{           
-           return this.vesticesVisitados;           
-        }        
+            }
+        } else {
+            return this.vesticesVisitados;
+        }
         return null;
     }
-    
-    public String dijkstra(String rotulo_origem, String rotulo_destino){
+
+    public String dijkstra(String rotulo_origem, String rotulo_destino) {
         //O rótulo destino pode ser vazio, verificar as diferenças do que 
         //deve ser retornado.
-        return "";
+        List<Vertice> menorCaminho = new ArrayList<>();
+        List<Vertice> naoVisitados = new ArrayList<>();
+        Vertice vertice_atual;
+        Vertice vertice_vizinho;
+        Vertice vertice_caminho;
+        String resposta = "";
+
+        resetVisitados();
+
+        menorCaminho.add(getVertice(rotulo_origem));
+
+        for (int i = 0; i < listaVertice.size(); i++) {
+            if (listaVertice.get(i).getRotulo().equals(rotulo_origem)) {
+                listaVertice.get(i).setDistancia(0);
+            } else {
+                listaVertice.get(i).setDistancia(9999);
+            }
+            naoVisitados.add(listaVertice.get(i));
+        }
+
+        Collections.sort(naoVisitados);
+
+        while (!naoVisitados.isEmpty()) {
+            vertice_atual = naoVisitados.get(0);
+            resposta = resposta + "\nPegou o vértice " + vertice_atual.getRotulo() + ", distância: " + vertice_atual.getDistancia();
+
+            for (int i = 0; i < vertice_atual.getListaAresta().size(); i++) {
+                vertice_vizinho = getVertice(vertice_atual.getListaAresta().get(i).getDestino());
+                resposta = resposta + "\nVerificando o vizinho de " + vertice_atual.getRotulo() + ": " + vertice_vizinho.getRotulo();
+
+                if (!vertice_vizinho.getVisitado()) {
+                    if (vertice_vizinho.getDistancia() > (vertice_atual.getDistancia() + vertice_atual.getListaAresta().get(i).getPeso())) {
+                        vertice_vizinho.setDistancia(vertice_atual.getDistancia() + vertice_atual.getListaAresta().get(i).getPeso());
+                        vertice_vizinho.setRotulo_pai(vertice_atual.getRotulo());
+
+                        if (vertice_vizinho.getRotulo().equals(rotulo_destino)) {
+                            menorCaminho.clear();
+                            vertice_caminho = vertice_vizinho;
+
+                            menorCaminho.add(vertice_vizinho);
+
+                            while (!vertice_caminho.getRotulo_pai().equals("")) {
+                                menorCaminho.add(getVertice(vertice_caminho.getRotulo_pai()));
+                                vertice_caminho = getVertice(vertice_caminho.getRotulo_pai());
+                            }
+
+                            Collections.sort(menorCaminho);
+                        }
+                    }
+                }
+            }
+
+            vertice_atual.setVisitado(true);
+            naoVisitados.remove(vertice_atual);
+
+            Collections.sort(naoVisitados);
+            
+            resposta = resposta + "\nNão foram visitados ainda:";
+            for (Vertice naoVisitado : naoVisitados) {
+                resposta = resposta + " | " + naoVisitado.getRotulo() + " Distância (" + naoVisitado.getDistancia() + ")" + " | ";
+            }
+        }
+
+        return resposta;
     }
 }
