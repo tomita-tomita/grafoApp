@@ -229,8 +229,6 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel1.getAccessibleContext().setAccessibleName("Trabalho de Grafos (M1.2)");
-
         getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
         pack();
@@ -456,7 +454,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void botaoDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDijkstraActionPerformed
         String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
-        String verticeDestino = pergunta("Qual o rótulo do vértice de origem?");
+        String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
         
         if (verticeOrigem.equals("")) {
             campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");

@@ -235,17 +235,17 @@ public class GrafoLista {
         Vertice b = new Vertice("B");
         Vertice c = new Vertice("C");
         Vertice d = new Vertice("D");
-        Vertice e = new Vertice("E");        
+        Vertice e = new Vertice("E");
         insereVertice(a);
         insereVertice(b);
         insereVertice(c);
         insereVertice(d);
-        insereVertice(e);        
+        insereVertice(e);
         inserirAresta("A", "B", 3);
-        inserirAresta("A", "C", 5);        
-        inserirAresta("A", "D", 6);        
+        inserirAresta("A", "C", 5);
+        inserirAresta("A", "D", 6);
         inserirAresta("A", "E", 8);
-        inserirAresta("B", "D", 2);        
+        inserirAresta("B", "D", 2);
         inserirAresta("B", "E", 11);
         inserirAresta("C", "E", 2);
     }
@@ -293,6 +293,10 @@ public class GrafoLista {
 
         resetVisitados();
 
+        if ((!verificaVertice(rotulo_origem)) || ((!verificaVertice(rotulo_destino)) && (!rotulo_destino.equals("")))) {
+            return "Pelo menos um dos vértices informados não existem.";
+        }
+
         menorCaminho.add(getVertice(rotulo_origem));
 
         for (int i = 0; i < listaVertice.size(); i++) {
@@ -309,6 +313,13 @@ public class GrafoLista {
         while (!naoVisitados.isEmpty()) {
             vertice_atual = naoVisitados.get(0);
             resposta = resposta + "\nPegou o vértice " + vertice_atual.getRotulo() + ", distância: " + vertice_atual.getDistancia();
+
+            if (!rotulo_destino.equals("")) {
+                if (getVertice(rotulo_destino).equals(vertice_atual)) {
+                    resposta = resposta + "\nChegou ao destino!";
+                    break;
+                }
+            }
 
             for (int i = 0; i < vertice_atual.getListaAresta().size(); i++) {
                 vertice_vizinho = getVertice(vertice_atual.getListaAresta().get(i).getDestino());
@@ -331,6 +342,14 @@ public class GrafoLista {
                             }
 
                             Collections.sort(menorCaminho);
+
+//                            resposta = "";
+//                                    
+//                            for (Vertice caminho : menorCaminho) {
+//                                resposta = resposta + " | " + caminho.getRotulo() + "(" +caminho.distancia + ") |";
+//                            }
+//                            
+//                            return resposta;
                         }
                     }
                 }
@@ -340,7 +359,7 @@ public class GrafoLista {
             naoVisitados.remove(vertice_atual);
 
             Collections.sort(naoVisitados);
-            
+
             resposta = resposta + "\nNão foram visitados ainda:";
             for (Vertice naoVisitado : naoVisitados) {
                 resposta = resposta + " | " + naoVisitado.getRotulo() + " Distância (" + naoVisitado.getDistancia() + ")" + " | ";
