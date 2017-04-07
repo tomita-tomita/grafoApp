@@ -431,6 +431,7 @@ public class Principal extends javax.swing.JFrame {
         }
         
         this.vesticesVisitados = grafo.bfs(verticeOrigem);
+        campoHistorico.setText(campoHistorico.getText() + "\n");
         for (String vesticesVisitado : vesticesVisitados) {
             campoHistorico.setText(campoHistorico.getText() + vesticesVisitado + ", ");
         }
@@ -446,6 +447,7 @@ public class Principal extends javax.swing.JFrame {
         }
         
         this.vesticesVisitados = grafo.dfs(verticeOrigem);
+        campoHistorico.setText(campoHistorico.getText() + "\n");
         for (String vesticesVisitado : vesticesVisitados) {
             campoHistorico.setText(campoHistorico.getText() + vesticesVisitado + ", ");
         }
