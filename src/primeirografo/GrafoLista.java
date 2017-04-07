@@ -309,7 +309,9 @@ public class GrafoLista {
         while (!naoVisitados.isEmpty()) {
             vertice_atual = naoVisitados.get(0);
             resposta = resposta + "\nPegou o vértice " + vertice_atual.getRotulo() + ", distância: " + vertice_atual.getDistancia();
-
+            if(rotulo_destino.equals(vertice_atual.getRotulo())){                
+                break;
+            }
             for (int i = 0; i < vertice_atual.getListaAresta().size(); i++) {
                 vertice_vizinho = getVertice(vertice_atual.getListaAresta().get(i).getDestino());
                 resposta = resposta + "\nVerificando o vizinho de " + vertice_atual.getRotulo() + ": " + vertice_vizinho.getRotulo();

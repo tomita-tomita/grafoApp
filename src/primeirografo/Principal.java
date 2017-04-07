@@ -229,8 +229,6 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel1.getAccessibleContext().setAccessibleName("Trabalho de Grafos (M1.2)");
-
         getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
         pack();
@@ -433,6 +431,7 @@ public class Principal extends javax.swing.JFrame {
         }
         
         this.vesticesVisitados = grafo.bfs(verticeOrigem);
+        campoHistorico.setText(campoHistorico.getText() + "\n");
         for (String vesticesVisitado : vesticesVisitados) {
             campoHistorico.setText(campoHistorico.getText() + vesticesVisitado + ", ");
         }
@@ -448,6 +447,7 @@ public class Principal extends javax.swing.JFrame {
         }
         
         this.vesticesVisitados = grafo.dfs(verticeOrigem);
+        campoHistorico.setText(campoHistorico.getText() + "\n");
         for (String vesticesVisitado : vesticesVisitados) {
             campoHistorico.setText(campoHistorico.getText() + vesticesVisitado + ", ");
         }
