@@ -246,7 +246,7 @@ public class GrafoLista {
         inserirAresta("A", "D", 6);
         inserirAresta("A", "E", 8);
         inserirAresta("B", "D", 2);
-        inserirAresta("B", "E", 11);
+        inserirAresta("B", "E", 9);
         inserirAresta("C", "E", 2);
     }
 
@@ -310,9 +310,9 @@ public class GrafoLista {
 
         Collections.sort(naoVisitados);
 
-        while (!naoVisitados.isEmpty()) {
+        while (!naoVisitados.isEmpty()) {                        
             vertice_atual = naoVisitados.get(0);
-            resposta = resposta + "\nPegou o vértice " + vertice_atual.getRotulo() + ", distância: " + vertice_atual.getDistancia();
+            resposta = resposta + "\nPegou o vértice " + vertice_atual.getRotulo() + ", distância: " + vertice_atual.getDistancia() + ", pai: " + vertice_atual.getRotulo_pai();
 
             if (!rotulo_destino.equals("")) {
                 if (getVertice(rotulo_destino).equals(vertice_atual)) {
