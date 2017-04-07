@@ -252,7 +252,15 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private String pergunta(String mensagem) {
-        return JOptionPane.showInputDialog(mensagem);
+        String resposta;        
+        
+        resposta = JOptionPane.showInputDialog(mensagem);
+        
+        if (resposta == null){
+            resposta = "";
+        }
+
+        return resposta;
     }
 
     private void botaoRemoverVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverVerticeActionPerformed
@@ -424,12 +432,12 @@ public class Principal extends javax.swing.JFrame {
 
     private void botaoBuscaEmLarguraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscaEmLarguraActionPerformed
         String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
-        
+
         if (verticeOrigem.equals("")) {
             campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
             return;
         }
-        
+
         this.vesticesVisitados = grafo.bfs(verticeOrigem);
         campoHistorico.setText(campoHistorico.getText() + "\n");
         for (String vesticesVisitado : vesticesVisitados) {
@@ -440,12 +448,12 @@ public class Principal extends javax.swing.JFrame {
 
     private void botaoBuscaEmProfundidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscaEmProfundidadeActionPerformed
         String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
-        
+
         if (verticeOrigem.equals("")) {
             campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
             return;
         }
-        
+
         this.vesticesVisitados = grafo.dfs(verticeOrigem);
         campoHistorico.setText(campoHistorico.getText() + "\n");
         for (String vesticesVisitado : vesticesVisitados) {
@@ -457,15 +465,15 @@ public class Principal extends javax.swing.JFrame {
     private void botaoDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDijkstraActionPerformed
         String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
         String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
-        
+
         if (verticeOrigem.equals("")) {
             campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
             return;
         }
-        
+
         campoHistorico.setText(grafo.dijkstra(verticeOrigem, verticeDestino));
-        
-        grafo.resetVisitados();                                        
+
+        grafo.resetVisitados();
     }//GEN-LAST:event_botaoDijkstraActionPerformed
 
     private void botaoVerticesAutomaticosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerticesAutomaticosActionPerformed
