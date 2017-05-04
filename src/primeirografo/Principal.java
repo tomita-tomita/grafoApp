@@ -2,6 +2,7 @@ package primeirografo;
 
 import com.alee.laf.WebLookAndFeel;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -518,7 +519,15 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                JGraphAdapterDemo demo = new JGraphAdapterDemo();
+                demo.init();      
+                JFrame frame = new JFrame(  );
+                frame.getContentPane(  ).add( demo );
+                frame.setTitle( "JGraphT Adapter to JGraph Demo" );
+                frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+                frame.pack(  );
+                frame.show(  );                
+                //new Principal().setVisible(true);
             }
         });
     }
