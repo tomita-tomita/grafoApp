@@ -11,6 +11,7 @@ import javax.swing.JApplet;
 import javax.swing.JFrame;
 
 import org.jgraph.JGraph;
+import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.GraphConstants;
 
@@ -44,7 +45,7 @@ public class JGraphAdapterDemo extends JApplet {
 
         // create a visualization using JGraph, via an adapter
         m_jgAdapter = new JGraphModelAdapter( g );
-
+        
         JGraph jgraph = new JGraph( m_jgAdapter );        
 
         adjustDisplaySettings( jgraph );
@@ -56,7 +57,7 @@ public class JGraphAdapterDemo extends JApplet {
         g.addVertex( "B" );
         g.addVertex( "C" );
         g.addVertex( "D" );
-
+        
         g.addEdge( "A", "B" );
         g.addEdge( "B", "C" );
         g.addEdge( "C", "A" );
@@ -92,13 +93,14 @@ public class JGraphAdapterDemo extends JApplet {
     }
 
 
-    private void positionVertexAt( Object vertex, int x, int y, JGraph jgraph ) {
-        DefaultGraphCell cell = m_jgAdapter.getVertexCell( vertex );
-        Map attr = cell.getAttributes();
+    private void positionVertexAt( Object vertex, int x, int y, JGraph jgraph ) {        
+        DefaultGraphCell cell = m_jgAdapter.getVertexCell( vertex );             
+        Map attr = cell.getAttributes();        
+        GraphConstants.setGradientColor(attr, Color.red);
         Rectangle2D b = GraphConstants.getBounds( attr );
-
+        
         GraphConstants.setBounds( attr, new Rectangle( x, y, (int)b.getWidth(), (int)b.getHeight()));
-
+        
         Map cellAttr = new HashMap();
         cellAttr.put( cell, attr );        
         m_jgAdapter.edit(cellAttr, null, null, null);           
