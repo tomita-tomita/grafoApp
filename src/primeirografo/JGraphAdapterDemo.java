@@ -28,8 +28,9 @@ import org.jgrapht.graph.DefaultEdge;
  * @author tomita
  */
 public class JGraphAdapterDemo extends JApplet {
-    private static final Color     DEFAULT_BG_COLOR = Color.decode( "#FAFBFF" );
+    private static final Color DEFAULT_BG_COLOR = Color.decode( "#FAFBFF" );
     private static final Dimension DEFAULT_SIZE = new Dimension( 530, 320 );
+    
 
 
     private JGraphModelAdapter m_jgAdapter;
@@ -37,6 +38,13 @@ public class JGraphAdapterDemo extends JApplet {
 
     public void init(GrafoLista grafo) {        
         ListenableGraph g = new ListenableDirectedGraph( DefaultEdge.class );
+        Color [] cores = new Color[grafo.listaVertice.size()];        
+        for(int i=0; i< cores.length; i++){
+            int r = gerador.nextInt(256);
+            int gr = gerador.nextInt(256);
+            int b = gerador.nextInt(256);            
+            cores[i] = new Color(r, gr, b);
+        }       
         
         m_jgAdapter = new JGraphModelAdapter( g );        
         
@@ -45,8 +53,8 @@ public class JGraphAdapterDemo extends JApplet {
         adjustDisplaySettings( jgraph );
         getContentPane().add( jgraph );
         resize( DEFAULT_SIZE );
-        
-        for (Vertice vertice : grafo.listaVertice) {            
+                
+        for (Vertice vertice : grafo.listaVertice) {                                          
             g.addVertex(vertice.getRotulo());
         }             
 
@@ -57,7 +65,7 @@ public class JGraphAdapterDemo extends JApplet {
         }        
         
         for (Vertice vertice : grafo.listaVertice){
-            positionVertexAt( vertice.getRotulo(), gerador.nextInt(380), gerador.nextInt(230), jgraph, grafo );    
+            positionVertexAt( vertice.getRotulo(), gerador.nextInt(380), gerador.nextInt(230), jgraph, grafo, cores );    
         }
     }
 
@@ -81,10 +89,15 @@ public class JGraphAdapterDemo extends JApplet {
     }
 
 
-    private void positionVertexAt( Object vertex, int x, int y, JGraph jgraph, GrafoLista grafo ) {            
+    private void positionVertexAt( Object vertex, int x, int y, JGraph jgraph, GrafoLista grafo, Color[] cores ) {            
         DefaultGraphCell cell = m_jgAdapter.getVertexCell( vertex );                     
         Map attr = cell.getAttributes();        
-        GraphConstants.setGradientColor(attr, Color.yellow);
+        for (Vertice vertice : grafo.listaVertice){
+            if(vertice.getRotulo().equals(vertex)){                          
+                GraphConstants.setBackground(attr, cores[grafo.listaVertice.indexOf(vertice)]);
+            }            
+        }
+       
         Rectangle2D b = GraphConstants.getBounds( attr );
         
         GraphConstants.setBounds( attr, new Rectangle( x, y, (int)b.getWidth(), (int)b.getHeight()));

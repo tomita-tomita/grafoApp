@@ -471,7 +471,7 @@ public class Principal extends javax.swing.JFrame {
         frame.setLocationRelativeTo(null);
         frame.getContentPane(  ).add( demo );
         frame.setTitle( "JGraphT Adapter to JGraph Demo" );
-        frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        frame.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
         frame.pack(  );
         frame.show(  );         
 //        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
