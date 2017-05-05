@@ -464,17 +464,27 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoBuscaEmProfundidadeActionPerformed
 
     private void botaoDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDijkstraActionPerformed
-        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
-        String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
-
-        if (verticeOrigem.equals("")) {
-            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
-            return;
-        }
-
-        campoHistorico.setText(grafo.dijkstra(verticeOrigem, verticeDestino));
-
-        grafo.resetVisitados();
+        
+        JGraphAdapterDemo demo = new JGraphAdapterDemo();
+        demo.init(grafo);      
+        JFrame frame = new JFrame(  );
+        frame.setLocationRelativeTo(null);
+        frame.getContentPane(  ).add( demo );
+        frame.setTitle( "JGraphT Adapter to JGraph Demo" );
+        frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        frame.pack(  );
+        frame.show(  );         
+//        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
+//        String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
+//
+//        if (verticeOrigem.equals("")) {
+//            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+//            return;
+//        }
+//
+//        campoHistorico.setText(grafo.dijkstra(verticeOrigem, verticeDestino));
+//
+//        grafo.resetVisitados();
     }//GEN-LAST:event_botaoDijkstraActionPerformed
 
     private void botaoVerticesAutomaticosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerticesAutomaticosActionPerformed
@@ -519,15 +529,8 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JGraphAdapterDemo demo = new JGraphAdapterDemo();
-                demo.init();      
-                JFrame frame = new JFrame(  );
-                frame.getContentPane(  ).add( demo );
-                frame.setTitle( "JGraphT Adapter to JGraph Demo" );
-                frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-                frame.pack(  );
-                frame.show(  );                
-                //new Principal().setVisible(true);
+               
+                new Principal().setVisible(true);
             }
         });
     }
