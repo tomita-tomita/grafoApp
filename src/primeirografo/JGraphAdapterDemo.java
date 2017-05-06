@@ -59,7 +59,7 @@ public class JGraphAdapterDemo extends JApplet {
         }             
 
         for (Vertice vertice : grafo.listaVertice){            
-            for (Aresta aresta : vertice.listaAresta){
+            for (Aresta aresta : vertice.getListaAresta()){
                 g.addEdge(vertice.getRotulo(), aresta.getDestino());                
             }
         }        
@@ -94,7 +94,8 @@ public class JGraphAdapterDemo extends JApplet {
         Map attr = cell.getAttributes();        
         for (Vertice vertice : grafo.listaVertice){
             if(vertice.getRotulo().equals(vertex)){                          
-                GraphConstants.setBackground(attr, cores[grafo.listaVertice.indexOf(vertice)]);
+                //GraphConstants.setBackground(attr, cores[grafo.listaVertice.indexOf(vertice)]);
+                GraphConstants.setBackground(attr, cores[grafo.getVertice(vertice.getRotulo()).getCor()]);
             }            
         }
        

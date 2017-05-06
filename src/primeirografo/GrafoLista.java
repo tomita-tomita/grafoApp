@@ -27,7 +27,7 @@ public class GrafoLista {
 
     public boolean insereVertice(Vertice novoVertice) {
         for (Vertice vertice : listaVertice) {
-            if (vertice.rotulo.equals(novoVertice.rotulo)) {
+            if (vertice.getRotulo().equals(novoVertice.getRotulo())) {
                 return false;
             }
         }
@@ -65,7 +65,7 @@ public class GrafoLista {
     public boolean verificaVertice(String vertice_verificar) {
         boolean existe = false;
         for (Vertice vertice : listaVertice) {
-            if (vertice.rotulo.equals(vertice_verificar)) {
+            if (vertice.getRotulo().equals(vertice_verificar)) {
                 existe = true;
             }
         }
@@ -75,9 +75,9 @@ public class GrafoLista {
     public boolean verificaAresta(String origem, String destino) {
         boolean exite = false;
         for (Vertice vertice : listaVertice) {
-            if (vertice.rotulo.equals(origem)) {
-                for (int i = 0; i < vertice.listaAresta.size(); i++) {
-                    if (vertice.listaAresta.get(i).destino.equals(destino)) {
+            if (vertice.getRotulo().equals(origem)) {
+                for (int i = 0; i < vertice.getListaAresta().size(); i++) {
+                    if (vertice.getListaAresta().get(i).destino.equals(destino)) {
                         exite = true;
                     }
                 }
@@ -89,12 +89,12 @@ public class GrafoLista {
     public String removeVertice(String vertice_remove) {
         if (verificaVertice(vertice_remove)) {
             for (int i = 0; i < this.listaVertice.size(); i++) {
-                if (this.listaVertice.get(i).rotulo.equals(vertice_remove)) {
+                if (this.listaVertice.get(i).getRotulo().equals(vertice_remove)) {
                     this.listaVertice.remove(i);
                     for (Vertice vertice : listaVertice) {
-                        for (int j = 0; j < vertice.listaAresta.size(); j++) {
-                            if (vertice.listaAresta.get(j).getVertice().equals(vertice_remove)) {
-                                vertice.listaAresta.remove(j);
+                        for (int j = 0; j < vertice.getListaAresta().size(); j++) {
+                            if (vertice.getListaAresta().get(j).getVertice().equals(vertice_remove)) {
+                                vertice.getListaAresta().remove(j);
                             }
                         }
                     }
@@ -108,10 +108,10 @@ public class GrafoLista {
     public String removeAresta(String origem, String destino) {
         if (verificaAresta(origem, destino)) {
             for (Vertice vertice : listaVertice) {
-                if (vertice.rotulo.equals(origem)) {
-                    for (int i = 0; i < vertice.listaAresta.size(); i++) {
-                        if (vertice.listaAresta.get(i).destino.equals(destino)) {
-                            vertice.listaAresta.remove(i);
+                if (vertice.getRotulo().equals(origem)) {
+                    for (int i = 0; i < vertice.getListaAresta().size(); i++) {
+                        if (vertice.getListaAresta().get(i).destino.equals(destino)) {
+                            vertice.getListaAresta().remove(i);
                         }
                     }
                 }
@@ -125,9 +125,9 @@ public class GrafoLista {
         String grafo = "";
 
         for (Vertice vertice : listaVertice) {
-            grafo = grafo + vertice.rotulo + ": ";
+            grafo = grafo + vertice.getRotulo() + ": ";
 
-            for (Aresta aresta : vertice.listaAresta) {
+            for (Aresta aresta : vertice.getListaAresta()) {
                 if (arestasTemPeso) {
                     grafo = grafo + aresta.destino + "(" + aresta.getPeso() + ") ";
                 } else {
@@ -161,8 +161,8 @@ public class GrafoLista {
                 if (verificaAresta(listaVertice.get(i).getRotulo(), listaVertice.get(j).getRotulo())) {
                     for (int k = 0; k < listaVertice.size(); k++) {
                         if (verificaAresta(listaVertice.get(j).getRotulo(), listaVertice.get(k).getRotulo())) {
-                            if ((verificaAresta(listaVertice.get(k).rotulo, listaVertice.get(i).getRotulo())) && (i != j) && (i != k) && (j != k)) {
-                                System.out.println(listaVertice.get(i).rotulo);
+                            if ((verificaAresta(listaVertice.get(k).getRotulo(), listaVertice.get(i).getRotulo())) && (i != j) && (i != k) && (j != k)) {
+                                System.out.println(listaVertice.get(i).getRotulo());
                                 possivel = true;
                             }
                         }
@@ -210,14 +210,14 @@ public class GrafoLista {
 
     public ArrayList<String> bfs(String vertice) {
         Vertice verticeAtual = getVertice(vertice);
-        verticeAtual.visitado = true;
+        verticeAtual.setVisitado(true);
         this.filaVertices.add(verticeAtual);
         while (!this.filaVertices.isEmpty()) {
             this.vesticesVisitados.add(this.filaVertices.firstElement().getRotulo());
             this.filaVertices.remove(0);
-            for (Aresta aresta : verticeAtual.listaAresta) {
+            for (Aresta aresta : verticeAtual.getListaAresta()) {
                 if (!getVertice(aresta.getVertice()).getVisitado()) {
-                    getVertice(aresta.getVertice()).visitado = true;
+                    getVertice(aresta.getVertice()).setVisitado(true);
                     this.filaVertices.add(getVertice(aresta.getVertice()));
                 }
             }
@@ -241,18 +241,18 @@ public class GrafoLista {
         insereVertice(c);
         insereVertice(d);
         insereVertice(e);
-        inserirAresta("A", "B", 3);
-        inserirAresta("A", "C", 5);
-        inserirAresta("A", "D", 6);
-        inserirAresta("A", "E", 8);
+        inserirAresta("A", "B", 1);        
+        inserirAresta("A", "D", 1);        
+        inserirAresta("E", "B", 2);
+        inserirAresta("E", "D", 9);
         inserirAresta("B", "D", 2);
-        inserirAresta("B", "E", 9);
+        inserirAresta("C", "B", 2);
         inserirAresta("C", "E", 2);
     }
 
     public void resetVisitados() {
         for (Vertice vertice : listaVertice) {
-            vertice.visitado = false;
+            vertice.setVisitado(false);
             vertice.setRotulo_pai("");
         }
         this.vesticesVisitados.clear();
@@ -260,10 +260,10 @@ public class GrafoLista {
 
     public ArrayList<String> dfs(String rotulo_origem) {
         Vertice verticeAtual = getVertice(rotulo_origem);
-        verticeAtual.visitado = true;
+        verticeAtual.setVisitado(true);
         this.vesticesVisitados.add(verticeAtual.getRotulo());
         this.pilhaVertices.add(verticeAtual);
-        for (Aresta aresta : verticeAtual.listaAresta) {
+        for (Aresta aresta : verticeAtual.getListaAresta()) {
             if (!getVertice(aresta.getVertice()).getVisitado()) {
                 dfs(aresta.getVertice());
             }
@@ -367,5 +367,15 @@ public class GrafoLista {
         }
 
         return resposta;
+    }
+
+    public ArrayList<Vertice> getListaVertice() {
+        return listaVertice;
+    }  
+    
+    public void resetCores(){
+        for (Vertice vertice : listaVertice) {
+            vertice.setCor(0);
+        }
     }
 }

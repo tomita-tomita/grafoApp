@@ -253,11 +253,11 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private String pergunta(String mensagem) {
-        String resposta;        
-        
+        String resposta;
+
         resposta = JOptionPane.showInputDialog(mensagem);
-        
-        if (resposta == null){
+
+        if (resposta == null) {
             resposta = "";
         }
 
@@ -448,32 +448,34 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoBuscaEmLarguraActionPerformed
 
     private void botaoBuscaEmProfundidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscaEmProfundidadeActionPerformed
-        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
-
-        if (verticeOrigem.equals("")) {
-            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
-            return;
-        }
-
-        this.vesticesVisitados = grafo.dfs(verticeOrigem);
-        campoHistorico.setText(campoHistorico.getText() + "\n");
-        for (String vesticesVisitado : vesticesVisitados) {
-            campoHistorico.setText(campoHistorico.getText() + vesticesVisitado + ", ");
-        }
-        grafo.resetVisitados();
+//        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
+//
+//        if (verticeOrigem.equals("")) {
+//            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
+//            return;
+//        }
+//
+//        this.vesticesVisitados = grafo.dfs(verticeOrigem);
+//        campoHistorico.setText(campoHistorico.getText() + "\n");
+//        for (String vesticesVisitado : vesticesVisitados) {
+//            campoHistorico.setText(campoHistorico.getText() + vesticesVisitado + ", ");
+//        }
+//        grafo.resetVisitados();
+        WelshPowellGraph welsh = new WelshPowellGraph(grafo);
+        welsh.colourVertices();
     }//GEN-LAST:event_botaoBuscaEmProfundidadeActionPerformed
 
     private void botaoDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDijkstraActionPerformed
-        
+
         JGraphAdapterDemo demo = new JGraphAdapterDemo();
-        demo.init(grafo);      
-        JFrame frame = new JFrame(  );
+        demo.init(grafo);
+        JFrame frame = new JFrame();
         frame.setLocationRelativeTo(null);
-        frame.getContentPane(  ).add( demo );
-        frame.setTitle( "JGraphT Adapter to JGraph Demo" );
-        frame.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
-        frame.pack(  );
-        frame.show(  );         
+        frame.getContentPane().add(demo);
+        frame.setTitle("JGraphT Adapter to JGraph Demo");
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.pack();
+        frame.show();
 //        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
 //        String verticeDestino = pergunta("Qual o rótulo do vértice de destino?");
 //
@@ -529,7 +531,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               
+
                 new Principal().setVisible(true);
             }
         });

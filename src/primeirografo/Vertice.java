@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public class Vertice implements Comparable<Vertice>{
 
-    ArrayList<Aresta> listaAresta = new ArrayList<>();
-    String rotulo;
-    String rotulo_pai;
-    Boolean visitado;
-    int distancia;
+    private ArrayList<Aresta> listaAresta = new ArrayList<>();
+    private String rotulo;
+    private String rotulo_pai;
+    private Boolean visitado;
+    private int distancia;
+    private int cor;
 
     Vertice(String rotulo) {
         this.visitado = false;
@@ -29,6 +30,15 @@ public class Vertice implements Comparable<Vertice>{
 
     public ArrayList<Aresta> getListaAresta() {
         return listaAresta;
+    }
+    
+    public boolean verificaVizinho(String rotulo){
+        for (Aresta aresta : listaAresta) {
+            if (aresta.getDestino().equals(rotulo)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public String getRotulo() {
@@ -57,6 +67,22 @@ public class Vertice implements Comparable<Vertice>{
 
     public void setVisitado(Boolean visitado) {
         this.visitado = visitado;
+    }
+
+    public int getCor() {
+        return cor;
+    }
+
+    public void setCor(int cor) {
+        this.cor = cor;
+    }
+    
+    public ArrayList<Vertice> getVizinhos(){
+        ArrayList<Vertice> listaVizinhos = new ArrayList<>();
+        for (Aresta aresta : listaAresta) {
+            listaVizinhos.add(new Vertice(aresta.destino));
+        }        
+        return listaVizinhos;
     }
 
     @Override
