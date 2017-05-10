@@ -215,7 +215,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel3.setMinimumSize(new java.awt.Dimension(50, 50));
         jPanel3.setPreferredSize(new java.awt.Dimension(100, 50));
 
-        jLabel1.setText("Trabalho de Grafos (M1.2)");
+        jLabel1.setText("Trabalho de Grafos (M2.1)");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 19, 227));
@@ -377,6 +377,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuFuncoes.add(jMenu5);
 
         jMenuJGraphT.setText("Exibir Grafo (JGraphT)");
+        jMenuJGraphT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuJGraphTActionPerformed(evt);
+            }
+        });
         jMenuFuncoes.add(jMenuJGraphT);
         jMenuFuncoes.add(jSeparator3);
 
@@ -404,7 +409,7 @@ public class Principal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ativaBotoes(boolean ativa) {        
+    private void ativaBotoes(boolean ativa) {
         //Botões Exibidos na Tela
         botaoAdicionarAresta.setEnabled(ativa);
         botaoAdicionarVertice.setEnabled(ativa);
@@ -414,16 +419,34 @@ public class Principal extends javax.swing.JFrame {
         botaoDsatur.setEnabled(ativa);
         botaoWelshPowellGraph.setEnabled(ativa);
         botaoJGraphTAdapter.setEnabled(ativa);
-        botaoVerticesAutomaticos.setEnabled(ativa);        
-        
+        botaoVerticesAutomaticos.setEnabled(ativa);
+
         //Opções do Grafo
-        jCheckBoxGrafoDirecional.setEnabled(ativa);
-        jCheckBoxGrafoPossuiPeso.setEnabled(ativa);
-        
+        jCheckBoxGrafoDirecional.setEnabled(!ativa);
+        jCheckBoxGrafoPossuiPeso.setEnabled(!ativa);
+
         //Menus
         jMenuVertices.setEnabled(ativa);
         jMenuArestas.setEnabled(ativa);
-        jMenuFuncoes.setEnabled(ativa);                        
+        jMenuFuncoes.setEnabled(ativa);
+    }
+
+    private void exibirGrafo(String titulo) {
+        JGraphAdapterDemo demo = new JGraphAdapterDemo();
+        demo.init(grafo);
+        JFrame frame = new JFrame();
+        frame.getContentPane().add(demo);
+
+        if (!titulo.equals("")) {
+            frame.setTitle("JGraphT Adapter to JGraph Demo" + " - " + titulo);
+        } else {
+            frame.setTitle("JGraphT Adapter to JGraph Demo");
+        }
+
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.show();
     }
 
     private String pergunta(String mensagem) {
@@ -448,10 +471,10 @@ public class Principal extends javax.swing.JFrame {
 
         campoHistorico.setText(campoHistorico.getText() + "\n" + grafo.removeVertice(rotulo));
     }//GEN-LAST:event_botaoRemoverVerticeActionPerformed
-    
+
 
     private void botaoCriarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCriarGrafoActionPerformed
-        if (botaoCriarGrafo.getText().equals("Criar Grafo")) {                                   
+        if (botaoCriarGrafo.getText().equals("Criar Grafo")) {
             grafo = new GrafoLista(jCheckBoxGrafoDirecional.isSelected(), jCheckBoxGrafoPossuiPeso.isSelected());
             arestasTemPeso = jCheckBoxGrafoPossuiPeso.isSelected();
             botaoCriarGrafo.setText("Remover Grafo");
@@ -478,7 +501,6 @@ public class Principal extends javax.swing.JFrame {
         } else {
             campoHistorico.setText(campoHistorico.getText() + "\nO vértice com o rótulo " + rotulo + " já existe.");
         }
-
     }//GEN-LAST:event_botaoAdicionarVerticeActionPerformed
 
     private void botaoAdicionarArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarArestaActionPerformed
@@ -528,36 +550,19 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoLimparHistoricoActionPerformed
 
     private void botaoDsaturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDsaturActionPerformed
-        String verticeOrigem = pergunta("Qual o rótulo do vértice de origem?");
-
-        if (verticeOrigem.equals("")) {
-            campoHistorico.setText(campoHistorico.getText() + "\nResposta inválida");
-            return;
-        }
-
-        this.vesticesVisitados = grafo.bfs(verticeOrigem);
-        campoHistorico.setText(campoHistorico.getText() + "\n");
-        for (String vesticesVisitado : vesticesVisitados) {
-            campoHistorico.setText(campoHistorico.getText() + vesticesVisitado + ", ");
-        }
-        grafo.resetVisitados();
+        Dsatur dsatur = new Dsatur(grafo);
+        dsatur.ColorirVertices();
+        exibirGrafo("Algoritmo Dsatur");
     }//GEN-LAST:event_botaoDsaturActionPerformed
 
     private void botaoWelshPowellGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoWelshPowellGraphActionPerformed
         WelshPowellGraph welsh = new WelshPowellGraph(grafo);
         welsh.colourVertices();
+        exibirGrafo("Algoritmo Welsh-Powell");
     }//GEN-LAST:event_botaoWelshPowellGraphActionPerformed
 
     private void botaoJGraphTAdapterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoJGraphTAdapterActionPerformed
-        JGraphAdapterDemo demo = new JGraphAdapterDemo();
-        demo.init(grafo);
-        JFrame frame = new JFrame();
-        frame.setLocationRelativeTo(null);
-        frame.getContentPane().add(demo);
-        frame.setTitle("JGraphT Adapter to JGraph Demo");
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        frame.pack();
-        frame.show();
+        exibirGrafo("");
     }//GEN-LAST:event_botaoJGraphTAdapterActionPerformed
 
     private void botaoVerticesAutomaticosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerticesAutomaticosActionPerformed
@@ -744,11 +749,13 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuWelshPowellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuWelshPowellActionPerformed
         WelshPowellGraph welsh = new WelshPowellGraph(grafo);
         welsh.colourVertices();
+        exibirGrafo("Algoritmo Welsh-Powell");
     }//GEN-LAST:event_jMenuWelshPowellActionPerformed
 
     private void jMenuDsaturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuDsaturActionPerformed
         Dsatur dsatur = new Dsatur(grafo);
         dsatur.ColorirVertices();
+        exibirGrafo("Algoritmo Dsatur");
     }//GEN-LAST:event_jMenuDsaturActionPerformed
 
     private void jMenuImprimirGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuImprimirGrafoActionPerformed
@@ -758,6 +765,10 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuLimparHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuLimparHistoricoActionPerformed
         campoHistorico.setText("");
     }//GEN-LAST:event_jMenuLimparHistoricoActionPerformed
+
+    private void jMenuJGraphTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuJGraphTActionPerformed
+        exibirGrafo("");
+    }//GEN-LAST:event_jMenuJGraphTActionPerformed
 
     /**
      * @param args the command line arguments

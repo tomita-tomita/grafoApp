@@ -21,8 +21,7 @@ public class Dsatur {
         Collections.sort(grafo.getListaVertice(), new Dsatur.VertexComparator());
         Map<String, String> vertex_color_index = new HashMap<>();
         int cor = 0;
-        int grau = 0;
-
+        int grau = 0;        
         grafo.resetCores();
 
         for (int i = 0; i < grafo.getListaVertice().size(); i++) {
@@ -44,15 +43,13 @@ public class Dsatur {
             }
         }
         System.out.println(vertex_color_index);
-
     }
 
     class VertexComparator implements Comparator<Vertice> {
-
+        
         @Override
         public int compare(Vertice a, Vertice b) {
             return a.getListaAresta().size() < b.getListaAresta().size() ? 1 : a.getListaAresta().size() == b.getListaAresta().size() ? 0 : -1;
-        }
-
+        }       
     }
 }
