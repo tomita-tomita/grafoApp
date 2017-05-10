@@ -1,5 +1,6 @@
 package primeirografo;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class Vertice implements Comparable<Vertice>{
@@ -9,7 +10,8 @@ public class Vertice implements Comparable<Vertice>{
     private String rotulo_pai;
     private Boolean visitado;
     private int distancia;
-    private int cor;
+    private int indiceCor;
+    private Color cor;
 
     Vertice(String rotulo) {
         this.visitado = false;
@@ -69,21 +71,21 @@ public class Vertice implements Comparable<Vertice>{
         this.visitado = visitado;
     }
 
-    public int getCor() {
+    public int getIndiceCor() {
+        return indiceCor;
+    }
+
+    public void setIndiceCor(int indiceCor) {
+        this.indiceCor = indiceCor;
+    }        
+
+    public Color getCor() {
         return cor;
     }
 
-    public void setCor(int cor) {
+    public void setCor(Color cor) {
         this.cor = cor;
-    }
-    
-    public ArrayList<Vertice> getVizinhos(){
-        ArrayList<Vertice> listaVizinhos = new ArrayList<>();
-        for (Aresta aresta : listaAresta) {
-            listaVizinhos.add(new Vertice(aresta.destino));
-        }        
-        return listaVizinhos;
-    }
+    }        
 
     @Override
     public int compareTo(Vertice t) {

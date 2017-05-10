@@ -8,48 +8,136 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 
 public class Dsatur {
 
     private final GrafoLista grafo;
+    private ArrayList<Color> mapColor;
+    private final Random generator;
+    public static Color NOCOLOR = Color.red;
 
     public Dsatur(GrafoLista grafo) {
+        this.generator = new Random();
         this.grafo = grafo;
     }
 
-    public void ColorirVertices() {
-        Collections.sort(grafo.getListaVertice(), new Dsatur.VertexComparator());
-        Map<String, String> vertex_color_index = new HashMap<>();
-        int cor = 0;
-        int grau = 0;        
-        grafo.resetCores();
+    public class DSATComparator implements Comparator<Vertice> {
 
-        for (int i = 0; i < grafo.getListaVertice().size(); i++) {
-            if (i == 0) {
-                grafo.getListaVertice().get(i).setCor(cor);
-                grau = grafo.getListaVertice().get(i).getListaAresta().size();                
-            } else if (!(vertex_color_index.containsKey(grafo.getListaVertice().get(i).getRotulo()))) {                
-                if (grafo.getListaVertice().get(i).getListaAresta().size() == grau) {
-                    
-                    grafo.getListaVertice().get(i).setCor(cor);
-                    vertex_color_index.put(grafo.getListaVertice().get(i).getRotulo(), "Colour " + cor);
-                    
-                } else {
-                    cor++;
-                    grau = grafo.getListaVertice().get(i).getListaAresta().size();
-                    grafo.getListaVertice().get(i).setCor(cor);
-                    vertex_color_index.put(grafo.getListaVertice().get(i).getRotulo(), "Colour " + cor);
+        private GrafoLista g;
+
+        public DSATComparator(GrafoLista g) {
+            this.g = g;
+        }
+
+        @Override
+        public int compare(Vertice o1, Vertice o2) {
+            // TODO Auto-generated method stub
+
+            int dsat1 = DSAT(o1);
+            int dsat2 = DSAT(o2);
+            return (-1) * (dsat1 - dsat2);
+
+        }
+
+        private int DSAT(Vertice o1) {
+            // TODO Auto-generated method stub
+            Collection<Vertice> voisin = null;
+            try {
+                voisin = g.getVizinhos(o1.getRotulo());
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            HashSet<Color> set = new HashSet<Color>();
+            for (Vertice v : voisin) {
+                if (!(v.getCor().equals(NOCOLOR))) {
+                    set.add(v.getCor());
                 }
             }
+            int nb = set.size();
+            if (set.isEmpty()) {
+                return o1.getListaAresta().size();
+            } else {
+                return nb;
+            }
         }
-        System.out.println(vertex_color_index);
+
     }
 
-    class VertexComparator implements Comparator<Vertice> {
-        
-        @Override
-        public int compare(Vertice a, Vertice b) {
-            return a.getListaAresta().size() < b.getListaAresta().size() ? 1 : a.getListaAresta().size() == b.getListaAresta().size() ? 0 : -1;
-        }       
+    public void ColorirVertices() {
+        try {
+            grafo.resetCores();
+            this.setNoColor();
+            this.mapColor = this.genereTabColor(200);
+            ArrayList<Vertice> all = new ArrayList<Vertice>(grafo.getListaVertice());
+            Collections.sort(all, new DSATComparator(grafo));
+            for (int i = 0; i < all.size(); i++) {
+                System.out.println(all.get(i).getListaAresta().size());
+            }
+            for (int i = 0; i < grafo.getListaVertice().size(); i++) {
+                int j = -1;
+                Vertice v;
+                do {
+                    j++;
+                    v = all.get(j);
+                } while (v.getCor() != NOCOLOR);
+                Color colMin = this.findMinColor(v);
+                v.setCor(colMin);
+                Collections.sort(all, new DSATComparator(grafo));
+            }
+            //this.end();            
+        } catch (Exception e) {            
+            e.printStackTrace();
+        }
+    }
+
+    private Color findMinColor(Vertice v) throws Exception {
+        Collection<Vertice> voisin = grafo.getVizinhos(v.getRotulo());
+        int min = Integer.MAX_VALUE;
+        Color colMin = null;
+        for (int i = 0; i < mapColor.size(); i++) {
+            int cpt = 0;
+            Color c = mapColor.get(i);
+            for (Vertice u : voisin) {
+                if (u.getCor().equals(c)) {
+                    cpt++;
+                }
+            }
+            if (cpt < min) {
+                min = cpt;
+                colMin = c;
+            }
+        }
+        return colMin;
+    }
+
+    private ArrayList<Color> genereTabColor(int nb) {
+        // TODO Auto-generated method stub
+        ArrayList<Color> res = new ArrayList<Color>();
+        for (int i = 0; i < nb; i++) {            
+            int r = generator.nextInt(256);
+            int gr = generator.nextInt(256);
+            int b = generator.nextInt(256);            
+            res.add(new Color(r, gr, b));
+
+        }
+        return res;
+    }
+
+    public void setNoColor() {
+        for (Vertice v : grafo.getListaVertice()) {
+            v.setCor(NOCOLOR);
+        }
+    }
+   
+    private int getNumberColors() {
+        // TODO Auto-generated method stub
+        Collection<Vertice> vertices = grafo.getListaVertice();
+        HashSet<Color> liste = new HashSet<Color>();
+        for (Vertice v : vertices) {
+            liste.add(v.getCor());
+        }
+        return liste.size();
     }
 }

@@ -245,7 +245,7 @@ public class GrafoLista {
         inserirAresta("A", "D", 1);        
         inserirAresta("E", "B", 2);
         inserirAresta("E", "D", 9);
-        inserirAresta("B", "D", 2);
+        //inserirAresta("B", "D", 2);
         inserirAresta("C", "B", 2);
         inserirAresta("C", "E", 2);
     }
@@ -375,7 +375,16 @@ public class GrafoLista {
     
     public void resetCores(){
         for (Vertice vertice : listaVertice) {
-            vertice.setCor(0);
+            vertice.setIndiceCor(0);
+            vertice.setCor(null);
         }
+    }
+    
+    public ArrayList<Vertice> getVizinhos(String vertice){
+        ArrayList<Vertice> listaVizinhos = new ArrayList<>();        
+        for (Aresta aresta : getVertice(vertice).getListaAresta()) {
+            listaVizinhos.add(getVertice(aresta.destino));
+        }        
+        return listaVizinhos;
     }
 }

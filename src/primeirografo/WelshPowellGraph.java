@@ -29,13 +29,13 @@ public class WelshPowellGraph {
         for (int i = 0; i < grafo.getListaVertice().size(); i++) {
             if (!(vertex_color_index.containsKey(grafo.getListaVertice().get(i).getRotulo()))) {                            
                 
-                grafo.getListaVertice().get(i).setCor(i);
+                grafo.getListaVertice().get(i).setIndiceCor(i);
                 vertex_color_index.put(grafo.getListaVertice().get(i).getRotulo(), "Colour " + i);
                 
                 for (int j = i + 1; j < grafo.getListaVertice().size(); j++) {
                     if (!(grafo.getListaVertice().get(i).verificaVizinho(grafo.getListaVertice().get(j).getRotulo())) && !(vertex_color_index.containsKey(grafo.getListaVertice().get(j).getRotulo()))) {
                         
-                        grafo.getListaVertice().get(j).setCor(i);
+                        grafo.getListaVertice().get(j).setIndiceCor(i);
                         vertex_color_index.put(grafo.getListaVertice().get(j).getRotulo(), "Colour " + i);
                         
                     } 

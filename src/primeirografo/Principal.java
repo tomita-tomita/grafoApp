@@ -431,8 +431,9 @@ public class Principal extends javax.swing.JFrame {
         jMenuFuncoes.setEnabled(ativa);
     }
 
-    private void exibirGrafo(String titulo) {
+    private void exibirGrafo(String titulo, boolean geraCoresAleatorias) {
         JGraphAdapterDemo demo = new JGraphAdapterDemo();
+        demo.setGeraCoresAleatorias(geraCoresAleatorias);
         demo.init(grafo);
         JFrame frame = new JFrame();
         frame.getContentPane().add(demo);
@@ -552,17 +553,17 @@ public class Principal extends javax.swing.JFrame {
     private void botaoDsaturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDsaturActionPerformed
         Dsatur dsatur = new Dsatur(grafo);
         dsatur.ColorirVertices();
-        exibirGrafo("Algoritmo Dsatur");
+        exibirGrafo("Algoritmo Dsatur", false);
     }//GEN-LAST:event_botaoDsaturActionPerformed
 
     private void botaoWelshPowellGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoWelshPowellGraphActionPerformed
         WelshPowellGraph welsh = new WelshPowellGraph(grafo);
         welsh.colourVertices();
-        exibirGrafo("Algoritmo Welsh-Powell");
+        exibirGrafo("Algoritmo Welsh-Powell", true);
     }//GEN-LAST:event_botaoWelshPowellGraphActionPerformed
 
     private void botaoJGraphTAdapterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoJGraphTAdapterActionPerformed
-        exibirGrafo("");
+        exibirGrafo("", true);
     }//GEN-LAST:event_botaoJGraphTAdapterActionPerformed
 
     private void botaoVerticesAutomaticosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerticesAutomaticosActionPerformed
@@ -749,13 +750,13 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuWelshPowellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuWelshPowellActionPerformed
         WelshPowellGraph welsh = new WelshPowellGraph(grafo);
         welsh.colourVertices();
-        exibirGrafo("Algoritmo Welsh-Powell");
+        exibirGrafo("Algoritmo Welsh-Powell", true);
     }//GEN-LAST:event_jMenuWelshPowellActionPerformed
 
     private void jMenuDsaturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuDsaturActionPerformed
         Dsatur dsatur = new Dsatur(grafo);
         dsatur.ColorirVertices();
-        exibirGrafo("Algoritmo Dsatur");
+        exibirGrafo("Algoritmo Dsatur", false);
     }//GEN-LAST:event_jMenuDsaturActionPerformed
 
     private void jMenuImprimirGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuImprimirGrafoActionPerformed
@@ -767,7 +768,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuLimparHistoricoActionPerformed
 
     private void jMenuJGraphTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuJGraphTActionPerformed
-        exibirGrafo("");
+        exibirGrafo("", true);
     }//GEN-LAST:event_jMenuJGraphTActionPerformed
 
     /**
