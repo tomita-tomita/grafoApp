@@ -31,22 +31,18 @@ public class Dsatur {
         }
 
         @Override
-        public int compare(Vertice o1, Vertice o2) {
-            // TODO Auto-generated method stub
-
+        public int compare(Vertice o1, Vertice o2) {            
             int dsat1 = DSAT(o1);
             int dsat2 = DSAT(o2);
             return (-1) * (dsat1 - dsat2);
 
         }
 
-        private int DSAT(Vertice o1) {
-            // TODO Auto-generated method stub
+        private int DSAT(Vertice o1) {            
             Collection<Vertice> voisin = null;
             try {
                 voisin = g.getVizinhos(o1.getRotulo());
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
+            } catch (Exception e) {                
                 e.printStackTrace();
             }
             HashSet<Color> set = new HashSet<Color>();
@@ -73,7 +69,7 @@ public class Dsatur {
             ArrayList<Vertice> all = new ArrayList<Vertice>(grafo.getListaVertice());
             Collections.sort(all, new DSATComparator(grafo));
             for (int i = 0; i < all.size(); i++) {
-                System.out.println(all.get(i).getListaAresta().size());
+                //System.out.println(all.get(i).getListaAresta().size());
             }
             for (int i = 0; i < grafo.getListaVertice().size(); i++) {
                 int j = -1;
@@ -112,8 +108,7 @@ public class Dsatur {
         return colMin;
     }
 
-    private ArrayList<Color> genereTabColor(int nb) {
-        // TODO Auto-generated method stub
+    private ArrayList<Color> genereTabColor(int nb) {        
         ArrayList<Color> res = new ArrayList<Color>();
         for (int i = 0; i < nb; i++) {            
             int r = generator.nextInt(256);
@@ -131,8 +126,7 @@ public class Dsatur {
         }
     }
    
-    private int getNumberColors() {
-        // TODO Auto-generated method stub
+    private int getNumberColors() {        
         Collection<Vertice> vertices = grafo.getListaVertice();
         HashSet<Color> liste = new HashSet<Color>();
         for (Vertice v : vertices) {

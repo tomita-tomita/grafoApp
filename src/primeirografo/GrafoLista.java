@@ -162,7 +162,7 @@ public class GrafoLista {
                     for (int k = 0; k < listaVertice.size(); k++) {
                         if (verificaAresta(listaVertice.get(j).getRotulo(), listaVertice.get(k).getRotulo())) {
                             if ((verificaAresta(listaVertice.get(k).getRotulo(), listaVertice.get(i).getRotulo())) && (i != j) && (i != k) && (j != k)) {
-                                System.out.println(listaVertice.get(i).getRotulo());
+                                //System.out.println(listaVertice.get(i).getRotulo());
                                 possivel = true;
                             }
                         }

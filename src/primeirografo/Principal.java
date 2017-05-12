@@ -88,6 +88,7 @@ public class Principal extends javax.swing.JFrame {
         setTitle("Grafos");
         setPreferredSize(new java.awt.Dimension(820, 491));
         setResizable(false);
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
         jPanel1.setMinimumSize(new java.awt.Dimension(1, 1));
@@ -188,7 +189,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.add(jPanel4, java.awt.BorderLayout.CENTER);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel5.setLayout(new java.awt.GridLayout());
+        jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
         jCheckBoxGrafoPossuiPeso.setText("Grafo possui peso");
         jPanel5.add(jCheckBoxGrafoPossuiPeso);
@@ -432,16 +433,16 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private void exibirGrafo(String titulo, boolean geraCoresAleatorias) {
-        JGraphAdapterDemo demo = new JGraphAdapterDemo();
+        JGraphAdapter demo = new JGraphAdapter();
         demo.setGeraCoresAleatorias(geraCoresAleatorias);
         demo.init(grafo);
         JFrame frame = new JFrame();
         frame.getContentPane().add(demo);
 
         if (!titulo.equals("")) {
-            frame.setTitle("JGraphT Adapter to JGraph Demo" + " - " + titulo);
+            frame.setTitle("Visualizador de grafo" + " - " + titulo);
         } else {
-            frame.setTitle("JGraphT Adapter to JGraph Demo");
+            frame.setTitle("Visualizador de grafo");
         }
 
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
