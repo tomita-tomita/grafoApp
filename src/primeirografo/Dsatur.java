@@ -39,14 +39,14 @@ public class Dsatur {
         }
 
         private int DSAT(Vertice o1) {            
-            Collection<Vertice> voisin = null;
+            Collection<Vertice> vertices = null;
             try {
-                voisin = g.getVizinhos(o1.getRotulo());
+                vertices = g.getVizinhos(o1.getRotulo());
             } catch (Exception e) {                
                 e.printStackTrace();
             }
             HashSet<Color> set = new HashSet<Color>();
-            for (Vertice v : voisin) {
+            for (Vertice v : vertices) {
                 if (!(v.getCor().equals(NOCOLOR))) {
                     set.add(v.getCor());
                 }
