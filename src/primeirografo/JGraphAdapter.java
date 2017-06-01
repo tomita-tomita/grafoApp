@@ -28,7 +28,7 @@ import org.jgrapht.graph.DefaultEdge;
  *
  * @author tomita
  */
-public class JGraphAdapterDemo extends JApplet {
+public class JGraphAdapter extends JApplet {
 
     private static final Color DEFAULT_BG_COLOR = Color.decode("#FAFBFF");
     private static final Dimension DEFAULT_SIZE = new Dimension(530, 320);

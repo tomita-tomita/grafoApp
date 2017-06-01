@@ -301,20 +301,20 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoRemoverArestaActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="botaoDsatur">
+            <Component class="javax.swing.JButton" name="botaoAtalhoA">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Dsatur"/>
+                <Property name="text" type="java.lang.String" value="Kruskal"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoDsaturActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoAtalhoAActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="botaoWelshPowellGraph">
+            <Component class="javax.swing.JButton" name="botaoAtalhoB">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Welsh-Powell"/>
+                <Property name="text" type="java.lang.String" value="Prim"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoWelshPowellGraphActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoAtalhoBActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="botaoJGraphTAdapter">

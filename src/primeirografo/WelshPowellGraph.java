@@ -42,7 +42,7 @@ public class WelshPowellGraph {
                 }
             }
         }
-        System.out.println(vertex_color_index);
+        //System.out.println(vertex_color_index);
     }
 
 }

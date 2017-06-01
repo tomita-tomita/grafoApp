@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class GrafoLista {
+public class GrafoLista implements Cloneable{
 
     ArrayList<Vertice> listaVertice = new ArrayList<>();
     ArrayList<String> vesticesVisitados = new ArrayList<>();
@@ -42,7 +44,7 @@ public class GrafoLista {
             for (Vertice vertice : listaVertice) {
                 if (vertice.getRotulo().equals(rotulo_origem)) {
                     if (arestasTemPeso) {
-                        possivel = vertice.insereAresta(new Aresta(rotulo_destino, pesoAresta));
+                        possivel = vertice.insereAresta(new Aresta(vertice.getRotulo(),rotulo_destino, pesoAresta));
                     } else {
                         possivel = vertice.insereAresta(new Aresta(rotulo_destino));
                     }
@@ -50,7 +52,7 @@ public class GrafoLista {
                 if (!direcional) {
                     if (vertice.getRotulo().equals(rotulo_destino)) {
                         if (arestasTemPeso) {
-                            possivel = vertice.insereAresta(new Aresta(rotulo_origem, pesoAresta));
+                            possivel = vertice.insereAresta(new Aresta(vertice.getRotulo(), rotulo_origem, pesoAresta));
                         } else {
                             possivel = vertice.insereAresta(new Aresta(rotulo_origem));
                         }
@@ -77,7 +79,7 @@ public class GrafoLista {
         for (Vertice vertice : listaVertice) {
             if (vertice.getRotulo().equals(origem)) {
                 for (int i = 0; i < vertice.getListaAresta().size(); i++) {
-                    if (vertice.getListaAresta().get(i).destino.equals(destino)) {
+                    if (vertice.getListaAresta().get(i).getDestino().equals(destino)) {
                         exite = true;
                     }
                 }
@@ -110,7 +112,7 @@ public class GrafoLista {
             for (Vertice vertice : listaVertice) {
                 if (vertice.getRotulo().equals(origem)) {
                     for (int i = 0; i < vertice.getListaAresta().size(); i++) {
-                        if (vertice.getListaAresta().get(i).destino.equals(destino)) {
+                        if (vertice.getListaAresta().get(i).getDestino().equals(destino)) {
                             vertice.getListaAresta().remove(i);
                         }
                     }
@@ -129,9 +131,9 @@ public class GrafoLista {
 
             for (Aresta aresta : vertice.getListaAresta()) {
                 if (arestasTemPeso) {
-                    grafo = grafo + aresta.destino + "(" + aresta.getPeso() + ") ";
+                    grafo = grafo + aresta.getDestino() + "(" + aresta.getPeso() + ") ";
                 } else {
-                    grafo = grafo + aresta.destino + " ";
+                    grafo = grafo + aresta.getDestino() + " ";
                 }
             }
             grafo = grafo + "\n";
@@ -162,7 +164,7 @@ public class GrafoLista {
                     for (int k = 0; k < listaVertice.size(); k++) {
                         if (verificaAresta(listaVertice.get(j).getRotulo(), listaVertice.get(k).getRotulo())) {
                             if ((verificaAresta(listaVertice.get(k).getRotulo(), listaVertice.get(i).getRotulo())) && (i != j) && (i != k) && (j != k)) {
-                                System.out.println(listaVertice.get(i).getRotulo());
+                                //System.out.println(listaVertice.get(i).getRotulo());
                                 possivel = true;
                             }
                         }
@@ -236,18 +238,24 @@ public class GrafoLista {
         Vertice c = new Vertice("C");
         Vertice d = new Vertice("D");
         Vertice e = new Vertice("E");
+        Vertice f = new Vertice("F");
         insereVertice(a);
         insereVertice(b);
         insereVertice(c);
         insereVertice(d);
         insereVertice(e);
-        inserirAresta("A", "B", 1);        
-        inserirAresta("A", "D", 1);        
-        inserirAresta("E", "B", 2);
-        inserirAresta("E", "D", 9);
-        //inserirAresta("B", "D", 2);
-        inserirAresta("C", "B", 2);
-        inserirAresta("C", "E", 2);
+        insereVertice(f);
+        
+        inserirAresta("A", "D", 2);
+        inserirAresta("A", "C", 7);  
+        inserirAresta("A", "E", 10);         
+        inserirAresta("D", "E", 7);  
+        inserirAresta("D", "F", 4);          
+        inserirAresta("C", "E", 9);  
+        inserirAresta("C", "F", 3);          
+        inserirAresta("F", "E", 8);  
+        inserirAresta("F", "B", 2);          
+        inserirAresta("B", "C", 3);  
     }
 
     public void resetVisitados() {
@@ -373,6 +381,20 @@ public class GrafoLista {
         return listaVertice;
     }  
     
+    public ArrayList<Vertice> clonarListaVertice() {
+        ArrayList<Vertice> vertices = new ArrayList<>();
+        
+        for (Vertice vertice : listaVertice) {
+            try {
+                vertices.add(vertice.clone());
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(GrafoLista.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return vertices;
+    }  
+    
     public void resetCores(){
         for (Vertice vertice : listaVertice) {
             vertice.setIndiceCor(0);
@@ -383,8 +405,53 @@ public class GrafoLista {
     public ArrayList<Vertice> getVizinhos(String vertice){
         ArrayList<Vertice> listaVizinhos = new ArrayList<>();        
         for (Aresta aresta : getVertice(vertice).getListaAresta()) {
-            listaVizinhos.add(getVertice(aresta.destino));
+            listaVizinhos.add(getVertice(aresta.getDestino()));
         }        
         return listaVizinhos;
+    }
+    
+    public ArrayList<Aresta> getArestasGrafo(){
+        ArrayList<Aresta> arestas = new ArrayList<>();
+        
+        //Verificar a questão de Grafo direcional ou não. Como se comportará?
+        for (Vertice vertice : listaVertice) {
+            for (Aresta aresta : vertice.getListaAresta()){
+                Aresta nova_aresta = new Aresta("");
+                
+                try {
+                    nova_aresta = aresta.clone();
+                    arestas.add(nova_aresta);
+                } catch (CloneNotSupportedException ex) {
+                    Logger.getLogger(GrafoLista.class.getName()).log(Level.SEVERE, null, ex);
+                }                                
+            }
+        }
+        
+        return arestas;
+    } 
+    
+    public boolean getGrafoDirecional(){
+        return direcional;
+    }
+    
+    public boolean getArestasTemPeso(){
+        return arestasTemPeso;
+    }
+    
+    public void insereListaVertices(ArrayList<Vertice> vertices){
+        for (Vertice vertice : vertices) {
+            insereVertice(vertice);
+        }
+    }    
+    
+    public void removeArestas(){
+        for (Vertice vertice : listaVertice) {
+            vertice.removeArestas();
+        }
+    }
+    
+    @Override
+    public GrafoLista clone() throws CloneNotSupportedException {
+        return (GrafoLista) super.clone();
     }
 }

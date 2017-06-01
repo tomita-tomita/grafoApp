@@ -43,8 +43,8 @@ public class Principal extends javax.swing.JFrame {
         botaoAdicionarAresta = new javax.swing.JButton();
         botaoRemoverVertice = new javax.swing.JButton();
         botaoRemoverAresta = new javax.swing.JButton();
-        botaoDsatur = new javax.swing.JButton();
-        botaoWelshPowellGraph = new javax.swing.JButton();
+        botaoAtalhoA = new javax.swing.JButton();
+        botaoAtalhoB = new javax.swing.JButton();
         botaoJGraphTAdapter = new javax.swing.JButton();
         botaoImprimirGrafo = new javax.swing.JButton();
         botaoLimparHistorico = new javax.swing.JButton();
@@ -145,21 +145,21 @@ public class Principal extends javax.swing.JFrame {
         });
         jPanel4.add(botaoRemoverAresta);
 
-        botaoDsatur.setText("Dsatur");
-        botaoDsatur.addActionListener(new java.awt.event.ActionListener() {
+        botaoAtalhoA.setText("Kruskal");
+        botaoAtalhoA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoDsaturActionPerformed(evt);
+                botaoAtalhoAActionPerformed(evt);
             }
         });
-        jPanel4.add(botaoDsatur);
+        jPanel4.add(botaoAtalhoA);
 
-        botaoWelshPowellGraph.setText("Welsh-Powell");
-        botaoWelshPowellGraph.addActionListener(new java.awt.event.ActionListener() {
+        botaoAtalhoB.setText("Prim");
+        botaoAtalhoB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoWelshPowellGraphActionPerformed(evt);
+                botaoAtalhoBActionPerformed(evt);
             }
         });
-        jPanel4.add(botaoWelshPowellGraph);
+        jPanel4.add(botaoAtalhoB);
 
         botaoJGraphTAdapter.setText("Exibir Grafo - JGraphT");
         botaoJGraphTAdapter.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +188,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.add(jPanel4, java.awt.BorderLayout.CENTER);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel5.setLayout(new java.awt.GridLayout());
+        jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
         jCheckBoxGrafoPossuiPeso.setText("Grafo possui peso");
         jPanel5.add(jCheckBoxGrafoPossuiPeso);
@@ -416,8 +416,8 @@ public class Principal extends javax.swing.JFrame {
         botaoImprimirGrafo.setEnabled(ativa);
         botaoRemoverAresta.setEnabled(ativa);
         botaoRemoverVertice.setEnabled(ativa);
-        botaoDsatur.setEnabled(ativa);
-        botaoWelshPowellGraph.setEnabled(ativa);
+        botaoAtalhoA.setEnabled(ativa);
+        botaoAtalhoB.setEnabled(ativa);
         botaoJGraphTAdapter.setEnabled(ativa);
         botaoVerticesAutomaticos.setEnabled(ativa);
 
@@ -432,16 +432,16 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private void exibirGrafo(String titulo, boolean geraCoresAleatorias) {
-        JGraphAdapterDemo demo = new JGraphAdapterDemo();
+        JGraphAdapter demo = new JGraphAdapter();
         demo.setGeraCoresAleatorias(geraCoresAleatorias);
         demo.init(grafo);
         JFrame frame = new JFrame();
         frame.getContentPane().add(demo);
 
         if (!titulo.equals("")) {
-            frame.setTitle("JGraphT Adapter to JGraph Demo" + " - " + titulo);
+            frame.setTitle("Visualizador de grafo" + " - " + titulo);
         } else {
-            frame.setTitle("JGraphT Adapter to JGraph Demo");
+            frame.setTitle("Visualizador de grafo");
         }
 
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -550,17 +550,15 @@ public class Principal extends javax.swing.JFrame {
         campoHistorico.setText("");
     }//GEN-LAST:event_botaoLimparHistoricoActionPerformed
 
-    private void botaoDsaturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDsaturActionPerformed
-        Dsatur dsatur = new Dsatur(grafo);
-        dsatur.ColorirVertices();
-        exibirGrafo("Algoritmo Dsatur", false);
-    }//GEN-LAST:event_botaoDsaturActionPerformed
+    private void botaoAtalhoAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtalhoAActionPerformed
+        Kruskal kruskal = new Kruskal(grafo);
+        kruskal.iniciar();
+    }//GEN-LAST:event_botaoAtalhoAActionPerformed
 
-    private void botaoWelshPowellGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoWelshPowellGraphActionPerformed
-        WelshPowellGraph welsh = new WelshPowellGraph(grafo);
-        welsh.colourVertices();
-        exibirGrafo("Algoritmo Welsh-Powell", true);
-    }//GEN-LAST:event_botaoWelshPowellGraphActionPerformed
+    private void botaoAtalhoBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtalhoBActionPerformed
+        Prim prim = new Prim(grafo);
+        prim.iniciar();
+    }//GEN-LAST:event_botaoAtalhoBActionPerformed
 
     private void botaoJGraphTAdapterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoJGraphTAdapterActionPerformed
         exibirGrafo("", true);
@@ -818,15 +816,15 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionarAresta;
     private javax.swing.JButton botaoAdicionarVertice;
+    private javax.swing.JButton botaoAtalhoA;
+    private javax.swing.JButton botaoAtalhoB;
     private javax.swing.JButton botaoCriarGrafo;
-    private javax.swing.JButton botaoDsatur;
     private javax.swing.JButton botaoImprimirGrafo;
     private javax.swing.JButton botaoJGraphTAdapter;
     private javax.swing.JButton botaoLimparHistorico;
     private javax.swing.JButton botaoRemoverAresta;
     private javax.swing.JButton botaoRemoverVertice;
     private javax.swing.JButton botaoVerticesAutomaticos;
-    private javax.swing.JButton botaoWelshPowellGraph;
     private javax.swing.JTextArea campoHistorico;
     private javax.swing.JCheckBox jCheckBoxGrafoDirecional;
     private javax.swing.JCheckBox jCheckBoxGrafoPossuiPeso;

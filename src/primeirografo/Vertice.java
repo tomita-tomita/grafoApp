@@ -3,7 +3,7 @@ package primeirografo;
 import java.awt.Color;
 import java.util.ArrayList;
 
-public class Vertice implements Comparable<Vertice>{
+public class Vertice implements Comparable<Vertice>, Cloneable{
 
     private ArrayList<Aresta> listaAresta = new ArrayList<>();
     private String rotulo;
@@ -85,7 +85,13 @@ public class Vertice implements Comparable<Vertice>{
 
     public void setCor(Color cor) {
         this.cor = cor;
-    }        
+    }      
+    
+    public void removeArestas(){        
+        while (getListaAresta().size() > 0){
+            getListaAresta().remove(0);
+        }
+    }
 
     @Override
     public int compareTo(Vertice t) {
@@ -93,6 +99,11 @@ public class Vertice implements Comparable<Vertice>{
           else if(this.getDistancia() == t.getDistancia()) return 0;
           
           return 1;
+    }
+    
+    @Override
+    public Vertice clone() throws CloneNotSupportedException {
+        return (Vertice) super.clone();
     }
         
 }
