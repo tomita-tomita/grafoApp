@@ -79,6 +79,9 @@ public class Principal extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuWelshPowell = new javax.swing.JMenuItem();
         jMenuDsatur = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuKruskal = new javax.swing.JMenuItem();
+        jMenuPrim = new javax.swing.JMenuItem();
         jMenuJGraphT = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuImprimirGrafo = new javax.swing.JMenuItem();
@@ -190,6 +193,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
+        jCheckBoxGrafoPossuiPeso.setSelected(true);
         jCheckBoxGrafoPossuiPeso.setText("Grafo possui peso");
         jPanel5.add(jCheckBoxGrafoPossuiPeso);
 
@@ -375,6 +379,26 @@ public class Principal extends javax.swing.JFrame {
         jMenu5.add(jMenuDsatur);
 
         jMenuFuncoes.add(jMenu5);
+
+        jMenu1.setText("Árvore Geradora Mínima");
+
+        jMenuKruskal.setText("Kruskal");
+        jMenuKruskal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuKruskalActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuKruskal);
+
+        jMenuPrim.setText("Prim");
+        jMenuPrim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuPrimActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuPrim);
+
+        jMenuFuncoes.add(jMenu1);
 
         jMenuJGraphT.setText("Exibir Grafo (JGraphT)");
         jMenuJGraphT.addActionListener(new java.awt.event.ActionListener() {
@@ -769,6 +793,16 @@ public class Principal extends javax.swing.JFrame {
         exibirGrafo("", true);
     }//GEN-LAST:event_jMenuJGraphTActionPerformed
 
+    private void jMenuPrimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPrimActionPerformed
+        Prim prim = new Prim(grafo);
+        prim.iniciar();
+    }//GEN-LAST:event_jMenuPrimActionPerformed
+
+    private void jMenuKruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKruskalActionPerformed
+        Kruskal kruskal = new Kruskal(grafo);
+        kruskal.iniciar();
+    }//GEN-LAST:event_jMenuKruskalActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -830,6 +864,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBoxGrafoPossuiPeso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuItem jMenuAdicionarAresta;
     private javax.swing.JMenu jMenuArestas;
@@ -843,7 +878,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuGrafoTeste;
     private javax.swing.JMenuItem jMenuImprimirGrafo;
     private javax.swing.JMenuItem jMenuJGraphT;
+    private javax.swing.JMenuItem jMenuKruskal;
     private javax.swing.JMenuItem jMenuLimparHistorico;
+    private javax.swing.JMenuItem jMenuPrim;
     private javax.swing.JMenuItem jMenuRemoverAresta;
     private javax.swing.JMenuItem jMenuRemoverVertice;
     private javax.swing.JMenuItem jMenuRetornarArestas;

@@ -103,7 +103,9 @@ public class Vertice implements Comparable<Vertice>, Cloneable{
     
     @Override
     public Vertice clone() throws CloneNotSupportedException {
-        return (Vertice) super.clone();
+        Vertice novo_vertice = (Vertice) super.clone();
+        novo_vertice.listaAresta = (ArrayList<Aresta>) this.getListaAresta().clone();
+        return novo_vertice;
     }
         
 }

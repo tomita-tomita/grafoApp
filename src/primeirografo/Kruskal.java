@@ -36,9 +36,13 @@ public class Kruskal {
     private void inicializarFloresta(GrafoLista grafo) {
         for (Vertice vertice : grafo.getListaVertice()) {
             GrafoLista novo_grafo = new GrafoLista(true, true);
-            novo_grafo.insereVertice(vertice);
-            novo_grafo.removeArestas();
-            floresta.add(novo_grafo);
+            try {
+                novo_grafo.insereVertice(vertice.clone());
+                novo_grafo.removeArestas();
+                floresta.add(novo_grafo);
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(Kruskal.class.getName()).log(Level.SEVERE, null, ex);
+            }            
         }
     }
 

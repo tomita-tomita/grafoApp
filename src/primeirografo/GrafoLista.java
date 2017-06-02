@@ -452,6 +452,8 @@ public class GrafoLista implements Cloneable{
     
     @Override
     public GrafoLista clone() throws CloneNotSupportedException {
-        return (GrafoLista) super.clone();
+        GrafoLista novo_grafo = (GrafoLista) super.clone();        
+        novo_grafo.listaVertice = this.clonarListaVertice();        
+        return novo_grafo;
     }
 }

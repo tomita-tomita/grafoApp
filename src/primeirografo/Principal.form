@@ -153,6 +153,29 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <Menu class="javax.swing.JMenu" name="jMenu1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&#xc1;rvore Geradora M&#xed;nima"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuKruskal">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kruskal"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuKruskalActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuPrim">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Prim"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuPrimActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuJGraphT">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exibir Grafo (JGraphT)"/>
@@ -364,6 +387,7 @@
           <SubComponents>
             <Component class="javax.swing.JCheckBox" name="jCheckBoxGrafoPossuiPeso">
               <Properties>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Grafo possui peso"/>
               </Properties>
             </Component>

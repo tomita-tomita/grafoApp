@@ -9,19 +9,19 @@ import javax.swing.JFrame;
 public class Prim {
 
     private ArrayList<Aresta> arestas_solucao = new ArrayList<>();
-    private ArrayList<Vertice> vertices_controle = new ArrayList<>();  
+    private ArrayList<Vertice> vertices_controle = new ArrayList<>();
     private GrafoLista grafo_prim;
 
     public Prim(GrafoLista grafo) {        
+        inicializarGrafoPrim(grafo.clonarListaVertice(), grafo.getGrafoDirecional(), grafo.getArestasTemPeso());
         this.vertices_controle = grafo.clonarListaVertice();
-        inicializarGrafoPrim(vertices_controle, grafo.getGrafoDirecional(), grafo.getArestasTemPeso());
     }
 
     public void iniciar() {
 
         Aresta menor_aresta;
-        Vertice vertice = vertices_controle.get(0);
-        vertices_controle.remove(vertice);
+        //Vertice vertice = vertices_controle.get(0);
+        vertices_controle.remove(0);
 
         //Enquanto não estiver vazio
         while (vertices_controle.size() > 0) {
@@ -32,6 +32,7 @@ public class Prim {
             //Remove o vértice do conjunto de controle.
             vertices_controle.remove(procurarVerticeControle(menor_aresta.getOrigem()));
         }
+
         insereArestas();
         exibeGrafo();
     }
@@ -40,24 +41,30 @@ public class Prim {
         grafo_prim = new GrafoLista(grafo_direcional, arestas_tem_peso);
 
         for (Vertice vertice : vertices) {
-            grafo_prim.insereVertice(vertice);
-            grafo_prim.removeArestas();
-        }
+            try {
+                Vertice novo_vertice = vertice.clone();
+                novo_vertice.removeArestas();
+                grafo_prim.insereVertice(novo_vertice);                
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(Prim.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }                
     }
 
     private Aresta verificarMenorAresta() {
         Aresta menor_aresta = new Aresta("", "", 999999999);
 
-        for (Vertice vertice : vertices_controle) {
-            for (Aresta aresta : vertice.getListaAresta()) {
+        while (menor_aresta.getOrigem().equals("")) {
+            for (Vertice vertice : vertices_controle) {
+                for (Aresta aresta : vertice.getListaAresta()) {
 
-                //Caso a aresta seja menor e o vertice destino não esteja no controle
-                if ((aresta.getPeso() < menor_aresta.getPeso()) && (!verificaArestaControle(aresta.getDestino()))) {
-                    menor_aresta = aresta;
+                    //Caso a aresta seja menor e o vertice destino não esteja no controle
+                    if ((aresta.getPeso() < menor_aresta.getPeso()) && (!verificaArestaControle(aresta.getDestino()))) {
+                        menor_aresta = aresta;
+                    }
                 }
             }
         }
-
         return menor_aresta;
     }
 
@@ -73,13 +80,13 @@ public class Prim {
 
     private int procurarVerticeControle(String rotulo_vertice) {
         for (Vertice vertice : vertices_controle) {
-            if (vertice.getRotulo().equals(rotulo_vertice)) {                
+            if (vertice.getRotulo().equals(rotulo_vertice)) {
                 return vertices_controle.indexOf(vertice);
             }
         }
         return 0;
     }
-    
+
     private void insereArestas() {
         for (Aresta aresta : arestas_solucao) {
             grafo_prim.getVertice(aresta.getOrigem()).insereAresta(aresta);
