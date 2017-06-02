@@ -1,21 +1,21 @@
-package primeirografo;
+package estruturaGrafo;
 
 public class Aresta implements Cloneable{    
     private String origem;
     private String destino;    
     int peso;
 
-    Aresta(String origem, String destino, int peso){            
+    public Aresta(String origem, String destino, int peso){            
         //Foi necessário inserir o campo origem para aplicar o algoritmo Kruskal
         this.origem = origem;
         this.destino = destino;            
         this.peso = peso;
     }  
 
-    Aresta(String destino){
+    public Aresta(String destino){
         this.destino = destino;
         this.peso = 0;
-    }
+    }   
         
     public String getVertice(){
         return this.destino;

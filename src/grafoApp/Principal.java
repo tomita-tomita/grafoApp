@@ -1,5 +1,13 @@
-package primeirografo;
+package grafoApp;
 
+import algoritmos.Prim;
+import algoritmos.Dsatur;
+import algoritmos.JGraphAdapter;
+import algoritmos.Kruskal;
+import algoritmos.WelshPowellGraph;
+import estruturaGrafo.Aresta;
+import estruturaGrafo.Vertice;
+import estruturaGrafo.GrafoLista;
 import com.alee.laf.WebLookAndFeel;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -89,7 +97,6 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Grafos");
-        setPreferredSize(new java.awt.Dimension(820, 491));
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Opções"));
@@ -219,7 +226,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel3.setMinimumSize(new java.awt.Dimension(50, 50));
         jPanel3.setPreferredSize(new java.awt.Dimension(100, 50));
 
-        jLabel1.setText("Trabalho de Grafos (M2.1)");
+        jLabel1.setText("Trabalho de Grafos (M2.2)");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 19, 227));
@@ -714,7 +721,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuRetornarArestasActionPerformed
 
     private void jMenuVerificarPlanaridadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuVerificarPlanaridadeActionPerformed
-        if (grafo.listaVertice.size() <= 0) {
+        if (grafo.getListaVertice().size() <= 0) {
             campoHistorico.setText(campoHistorico.getText() + "\nNão existem vértices.");
         } else if (grafo.verificaPlanar()) {
             campoHistorico.setText(campoHistorico.getText() + "\nO grafo pode ser planar.");

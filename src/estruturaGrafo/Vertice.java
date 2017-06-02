@@ -1,4 +1,4 @@
-package primeirografo;
+package estruturaGrafo;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class Vertice implements Comparable<Vertice>, Cloneable{
     private int indiceCor;
     private Color cor;
 
-    Vertice(String rotulo) {
+    public Vertice(String rotulo) {
         this.visitado = false;
         this.rotulo = rotulo;
     }   

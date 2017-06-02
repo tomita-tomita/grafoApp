@@ -1,4 +1,4 @@
-package primeirografo;
+package estruturaGrafo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -233,29 +233,95 @@ public class GrafoLista implements Cloneable{
     }
 
     public void criarGrafoTeste() {
+
+//==============================================================================        
+//        Exemplo slide (Aula)        
+//==============================================================================
+//        Vertice a = new Vertice("A");
+//        Vertice b = new Vertice("B");
+//        Vertice c = new Vertice("C");
+//        Vertice d = new Vertice("D");
+//        Vertice e = new Vertice("E");
+//        Vertice f = new Vertice("F");
+//        insereVertice(a);
+//        insereVertice(b);
+//        insereVertice(c);
+//        insereVertice(d);
+//        insereVertice(e);
+//        insereVertice(f);
+//        
+//        inserirAresta("A", "D", 2);
+//        inserirAresta("A", "C", 7);  
+//        inserirAresta("A", "E", 10);         
+//        inserirAresta("D", "E", 7);  
+//        inserirAresta("D", "F", 4);          
+//        inserirAresta("C", "E", 9);  
+//        inserirAresta("C", "F", 3);          
+//        inserirAresta("F", "E", 8);  
+//        inserirAresta("F", "B", 2);          
+//        inserirAresta("B", "C", 3);  
+
+//==============================================================================
+//        Grafo de exemplo (PRIM) 
+//        Origem: https://pt.wikipedia.org/wiki/Algoritmo_de_Prim
+//==============================================================================
+
+//        Vertice a = new Vertice("0");
+//        Vertice b = new Vertice("1");
+//        Vertice c = new Vertice("2");
+//        Vertice d = new Vertice("3");
+//        Vertice e = new Vertice("4");
+//        Vertice f = new Vertice("5");
+//        Vertice g = new Vertice("6");
+//        Vertice h = new Vertice("7");
+//        insereVertice(a);
+//        insereVertice(b);
+//        insereVertice(c);
+//        insereVertice(d);
+//        insereVertice(e);
+//        insereVertice(f);
+//        insereVertice(g);
+//        insereVertice(h);
+//        
+//        inserirAresta("6", "7", 9);
+//        inserirAresta("3", "5", 7);
+//        inserirAresta("2", "1", 7);
+//        inserirAresta("1", "4", 6);
+//        inserirAresta("3", "6", 5);
+//        inserirAresta("2", "6", 3);
+//        inserirAresta("0", "1", 3);
+//        inserirAresta("4", "5", 2);
+//        inserirAresta("1", "3", 2);
+//        inserirAresta("2", "7", 2);
+//        inserirAresta("5", "6", 1);
+//        inserirAresta("0", "2", 1);    
+
+//==============================================================================
+//      Grafo de exemplo (KRUSKAL e Prim) 
+//      Origem: https://stackoverflow.com/questions/1195872/kruskal-vs-prim
+//==============================================================================
+
         Vertice a = new Vertice("A");
         Vertice b = new Vertice("B");
         Vertice c = new Vertice("C");
         Vertice d = new Vertice("D");
         Vertice e = new Vertice("E");
-        Vertice f = new Vertice("F");
+        Vertice f = new Vertice("F");        
         insereVertice(a);
         insereVertice(b);
         insereVertice(c);
         insereVertice(d);
         insereVertice(e);
-        insereVertice(f);
+        insereVertice(f);                
+        inserirAresta("A", "B", 4);
+        inserirAresta("A", "C", 4);
+        inserirAresta("C", "B", 2);
+        inserirAresta("B", "D", 3);
+        inserirAresta("B", "E", 4);
+        inserirAresta("B", "F", 2);
+        inserirAresta("D", "E", 3);
+        inserirAresta("E", "F", 3);
         
-        inserirAresta("A", "D", 2);
-        inserirAresta("A", "C", 7);  
-        inserirAresta("A", "E", 10);         
-        inserirAresta("D", "E", 7);  
-        inserirAresta("D", "F", 4);          
-        inserirAresta("C", "E", 9);  
-        inserirAresta("C", "F", 3);          
-        inserirAresta("F", "E", 8);  
-        inserirAresta("F", "B", 2);          
-        inserirAresta("B", "C", 3);  
     }
 
     public void resetVisitados() {

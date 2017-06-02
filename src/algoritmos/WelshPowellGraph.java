@@ -1,5 +1,7 @@
-package primeirografo;
+package algoritmos;
 
+import estruturaGrafo.Vertice;
+import estruturaGrafo.GrafoLista;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;

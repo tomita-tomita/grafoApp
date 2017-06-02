@@ -1,5 +1,8 @@
-package primeirografo;
+package algoritmos;
 
+import estruturaGrafo.Aresta;
+import estruturaGrafo.GrafoLista;
+import estruturaGrafo.Vertice;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.logging.Level;

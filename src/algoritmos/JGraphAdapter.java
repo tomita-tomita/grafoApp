@@ -1,5 +1,8 @@
-package primeirografo;
+package algoritmos;
 
+import estruturaGrafo.Aresta;
+import estruturaGrafo.Vertice;
+import estruturaGrafo.GrafoLista;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
@@ -39,7 +42,7 @@ public class JGraphAdapter extends JApplet {
 
     public void init(GrafoLista grafo) {
         ListenableGraph g = new ListenableDirectedGraph(DefaultEdge.class);
-        Color[] cores = new Color[grafo.listaVertice.size()];
+        Color[] cores = new Color[grafo.getListaVertice().size()];
         for (int i = 0; i < cores.length; i++) {
             int r = gerador.nextInt(256);
             int gr = gerador.nextInt(256);
@@ -55,17 +58,17 @@ public class JGraphAdapter extends JApplet {
         getContentPane().add(jgraph);
         resize(DEFAULT_SIZE);
 
-        for (Vertice vertice : grafo.listaVertice) {
+        for (Vertice vertice : grafo.getListaVertice()) {
             g.addVertex(vertice.getRotulo());
         }
 
-        for (Vertice vertice : grafo.listaVertice) {
+        for (Vertice vertice : grafo.getListaVertice()) {
             for (Aresta aresta : vertice.getListaAresta()) {
                 g.addEdge(vertice.getRotulo(), aresta.getDestino());
             }
         }
 
-        for (Vertice vertice : grafo.listaVertice) {
+        for (Vertice vertice : grafo.getListaVertice()) {
             positionVertexAt(vertice.getRotulo(), gerador.nextInt(380), gerador.nextInt(230), jgraph, grafo, cores);
         }
     }
@@ -91,9 +94,9 @@ public class JGraphAdapter extends JApplet {
     private void positionVertexAt(Object vertex, int x, int y, JGraph jgraph, GrafoLista grafo, Color[] cores) {
         DefaultGraphCell cell = m_jgAdapter.getVertexCell(vertex);
         Map attr = cell.getAttributes();
-        for (Vertice vertice : grafo.listaVertice) {
+        for (Vertice vertice : grafo.getListaVertice()) {
             if (vertice.getRotulo().equals(vertex)) {
-                //GraphConstants.setBackground(attr, cores[grafo.listaVertice.indexOf(vertice)]);
+                //GraphConstants.setBackground(attr, cores[grafo.getListaVertice().indexOf(vertice)]);
                 if (geraCoresAleatorias) {
                     GraphConstants.setBackground(attr, cores[grafo.getVertice(vertice.getRotulo()).getIndiceCor()]);
                 } else {
